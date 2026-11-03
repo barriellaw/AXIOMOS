@@ -22,4 +22,4 @@ This repository is defining a new OS project. Treat its documentation as the cur
 
 ## Scope boundary
 
-The project may eventually include a Linux-based system image, Rust system services and tools, packaging, installation and update mechanisms, and a user-facing environment. Their exact choices remain open until documented. This guide does not authorize implementing them by itself.
+The project is intended to include a Linux-based system image, Rust system services and tools where appropriate, packaging, installation and update mechanisms, and a user-facing environment. Foundational choices are recorded in `docs/DECISIONS.md`; implementation has not started. This guide does not authorize implementation by itself.

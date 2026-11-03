@@ -203,3 +203,120 @@ See [Open questions](OPEN_QUESTIONS.md) for the remaining decision backlog.
 - **Decision:** Keep the permissions declared by each Flatpak as its baseline; Axiom must not silently add global or per-app overrides that broaden access. Prefer portal-mediated, user-selected access to files and devices where supported. Explain static permissions and their practical effect before installation, and let users inspect or change permissions through supported desktop tools.
 - **Alternatives:** Automatically grant broad access to avoid app compatibility problems; remove permissions from apps globally regardless of function; leave permissions unexplained and rely on users to discover tools themselves.
 - **Consequences:** Axiom must validate which permissions and source details Discover exposes, add plain-language guidance where needed, and document the supported permission-management path. Some apps may not work fully under their declared permissions; users may need to make a deliberate permission change.
+
+### DEC-022: Flatpak permission-management tool
+
+- **Status:** Accepted
+- **Date:** 2026-11-03
+- **Context:** DEC-021 requires users to inspect and change Flatpak permissions through a supported desktop tool. KDE provides a Flatpak permissions module for System Settings (`flatpak-kcm`), while Flatseal is a separate graphical application. Integrating permission controls into the existing settings app should be easier for newcomers to find and avoids requiring a separate tool. See [KDE's Flatpak KCM](https://invent.kde.org/plasma/flatpak-kcm), the [Fedora package](https://packages.fedoraproject.org/pkgs/flatpak-kcm/flatpak-kcm/), and [Flathub's permission guidance](https://docs.flathub.org/docs/for-users/permissions).
+- **Decision:** Include Fedora's `flatpak-kcm` package and recommend System Settings → Application Permissions → Flatpak Permissions as Axiom's supported way to inspect and change Flatpak permissions. Do not install Flatseal by default; users may install it from Discover if they prefer its separate interface.
+- **Alternatives:** Install Flatseal by default and make it the supported tool; recommend command-line `flatpak override`; provide no GUI permission-management path.
+- **Consequences:** The selected Fedora release must provide a compatible `flatpak-kcm`, and the path, labels, permission descriptions, and reset behavior must be checked in the target Plasma session. If the module is absent or confusing, the release must not claim the permission-management criterion is met.
+
+### DEC-023: Local-first diagnostics and remote access
+
+- **Status:** Accepted
+- **Date:** 2026-11-03
+- **Context:** The initial product serves desktop newcomers and has no staffed remote-support operation. systemd-journald stores logs locally and applies configured size limits; KDE Desktop Sharing starts its server only when the user enables sharing. Remote access and log uploads therefore need explicit user action rather than being part of the default image. See [systemd journal storage](https://www.freedesktop.org/software/systemd/man/258/journald.conf.html) and [KDE Desktop Sharing](https://docs.kde.org/stable_kf6/en/krfb/krfb/using-krfb.html).
+- **Decision:** Keep system logs local under Fedora's bounded journal defaults. Do not add Axiom telemetry, automatic log uploads, remote management, SSH access, or desktop-sharing services enabled by default. If Axiom later adds a support-log export, require the user to start it, review what will be included, and confirm before sharing. Preserve normal outbound network access for user applications, Discover/Flatpak, and the accepted Axiom update workflow.
+- **Alternatives:** Add opt-out telemetry and automatic diagnostic uploads; enable remote support services by default; block most outbound networking except system updates.
+- **Consequences:** Support instructions must work without remote access. Axiom must document how users can intentionally enable KDE Desktop Sharing or other remote services, and explain that logs can contain sensitive system details. Any support bundle needs a reviewable contents list and explicit sharing step before it is offered.
+
+### DEC-024: Vulnerability reporting and response targets
+
+- **Status:** Accepted
+- **Date:** 2026-11-03
+- **Context:** The repository is hosted on GitHub, has no `SECURITY.md`, and has no published vulnerability contact path. GitHub offers private vulnerability reporting for public repositories. CISA's vulnerability-reporting guide describes seven days as a standard target for a personal acknowledgment; this is a reference point, not a service-level guarantee. See [GitHub private reporting](https://docs.github.com/en/code-security/how-tos/report-and-fix-vulnerabilities/configure-vulnerability-reporting/configure-for-a-repository) and [CISA reporting guidance](https://www.cisa.gov/sites/default/files/publications/guide-vulnerability-reporting-americas-election-admins_508.pdf).
+- **Decision:** Before Axiom publishes a production release, publish a `SECURITY.md` and enable GitHub private vulnerability reporting. Target acknowledgment within 7 calendar days, an initial severity/scope assessment within 14 calendar days, and status updates at least every 30 days while a report remains open. Prioritize fixes for all supported Axiom releases. Coordinate disclosure with the reporter; do not promise a fixed remediation deadline, but publish a security advisory and available mitigation when a fix is released.
+- **Alternatives:** Accept reports only through public issues; promise a fixed patch deadline regardless of severity or maintainer capacity; defer a reporting policy until after the first vulnerability is reported.
+- **Consequences:** Maintainers must watch and route GitHub security notifications so private reports are not missed. The security policy must explain scope, supported releases, response targets, coordinated disclosure, and how users receive fixes. Targets are goals, not a staffed 24/7 response commitment.
+
+### DEC-025: OSTree release-signature format
+
+- **Status:** Accepted
+- **Date:** 2026-11-03
+- **Context:** DEC-014 requires signed Axiom commits, but does not choose a signature format. OSTree supports per-remote OpenPGP commit verification, enabled by default for GPG, and a separate Ed25519 verification engine. A per-remote keyring keeps Axiom trust scoped to Axiom's production remote. See the [OSTree remote configuration reference](https://ostreedev.github.io/ostree/man/ostree.repo-config.html) and [GPG verification documentation](https://ostreedev.github.io/ostree/man/ostree.html).
+- **Decision:** Sign production Axiom OSTree commits with OpenPGP/GPG. Configure the Axiom remote to require a valid GPG signature and trust only the Axiom release key for that remote; do not add the key to global system trust. Keep Fedora RPM verification separate and enabled during composition.
+- **Alternatives:** Use OSTree's Ed25519 signature engine; rely on HTTPS without signed commits.
+- **Consequences:** Build and client validation must confirm the selected Fedora OSTree/rpm-ostree versions support the chosen per-remote GPG setup. Key storage, backup, rotation, revocation, and recovery still require a separate policy.
+
+### DEC-026: Production build provenance record
+
+- **Status:** Accepted
+- **Date:** 2026-11-03
+- **Context:** The accepted image pipeline composes Fedora package inputs into an Axiom OSTree commit and then produces a qcow2 artifact. Build-input provenance is needed to investigate compromised inputs and reproduce a release. Exact input pinning and reproducibility remain unvalidated.
+- **Decision:** Publish a machine-readable provenance manifest with each production image and a detached OpenPGP signature over the manifest. Record the Axiom source/treefile commit, Fedora repository metadata identity and package NEVRAs, package-signing key fingerprints, compose and Image Builder versions/configuration, OSTree commit checksum, qcow2 SHA-256 digest, and release signing-key fingerprint. A release maintainer must review the manifest and resulting image identity before signing and publishing. Describe a release as reproducible only after an independent rebuild produces matching declared outputs.
+- **Alternatives:** Provide only human-written release notes; require a full SLSA/in-toto attestation service before the first release; publish images without input records.
+- **Consequences:** The build pipeline must collect input and output metadata without exposing secrets or host-specific sensitive data. The release workflow gains a review step. The manifest improves traceability but is not proof that the source or build process is benign; independent rebuilds and deeper supply-chain controls remain separate work.
+
+### DEC-027: Working project name
+
+- **Status:** Accepted
+- **Date:** 2026-11-03
+- **Context:** Project documents currently use Axiom OS, but its identity is not confirmed as the final public name. Renaming during early project definition is less costly than changing a product identity after release materials and user recognition accumulate.
+- **Decision:** Continue using Axiom OS as the working name for project definition and prototype development. Confirm the final public name and identity before a production release; do not treat this decision as brand or trademark clearance.
+- **Alternatives:** Commit to Axiom OS as the permanent public name now; switch to a new codename for all project work.
+- **Consequences:** Internal documentation and prototypes can use the current name. Public branding and release materials remain provisional until the name is reviewed and confirmed.
+
+### DEC-028: Inherit Fedora Kinoite base components
+
+- **Status:** Accepted
+- **Date:** 2026-11-03
+- **Context:** Fedora Kinoite is the selected initial foundation, and the project is still validating its custom image pipeline. Replacing foundational components such as the kernel, init/service manager, libc, or native deployment stack would create compatibility and maintenance work before Axiom has demonstrated a specific need.
+- **Decision:** In the first release, inherit the core components supplied by the selected Fedora Kinoite base, including its Linux kernel, systemd service manager, glibc, and rpm-ostree/OSTree deployment stack. Replace none of these in the first release. Consider a replacement only when a documented user or technical requirement justifies the maintenance and compatibility cost.
+- **Alternatives:** Replace foundational components as part of establishing Axiom's distinct identity; choose replacements independently before validating the Fedora-derived image path.
+- **Consequences:** The initial system stays close to Fedora's tested desktop and update behavior. Axiom-specific Rust software should integrate through established interfaces rather than fork or replace foundational components by default.
+
+### DEC-029: Rust and upstream component ownership
+
+- **Status:** Accepted
+- **Date:** 2026-11-03
+- **Context:** The project prefers Rust for new system software, but its initial foundation already provides mature Linux components in C and other languages. Rewriting those components would increase maintenance and compatibility costs without necessarily helping the accepted newcomer-focused release.
+- **Decision:** Use Rust for new Axiom-owned system tools and services when it fits the requirement and the needed interfaces and libraries are mature enough. Prefer established upstream components for existing system responsibilities; do not rewrite or fork them solely to use Rust. Give every Axiom-owned component a documented purpose, owner, privilege boundary, and maintenance plan.
+- **Alternatives:** Require all project code to be Rust regardless of fit; rewrite inherited components incrementally; avoid project-owned system software entirely.
+- **Consequences:** Axiom can add Rust software where it provides a clear benefit while keeping the platform compatible with Fedora and KDE. Each proposed component still needs a user-facing need and lifecycle justification before implementation.
+
+### DEC-030: First-release artifact and build host
+
+- **Status:** Accepted
+- **Date:** 2026-11-03
+- **Context:** The accepted first release targets an x86-64 QEMU desktop and the accepted image pipeline ends in a Kinoite-compatible qcow2. Image Builder supports Fedora Kinoite qcow2 targets, and its documented build environment and target availability depend on the host and tool versions. See the [Image Builder Kinoite image description](https://osbuild.org/docs/user-guide/image-descriptions/fedora-44/kinoite-qcow2/), [host installation guide](https://osbuild.org/docs/developer-guide/projects/image-builder/installation/), and [target overview](https://osbuild.org/docs/user-guide/image-descriptions/).
+- **Decision:** Make x86-64 qcow2 for QEMU the only supported first-release image artifact. Document an x86-64 Fedora Linux host matching the selected Fedora base release as the supported local build and validation environment. Other host operating systems and image formats remain unsupported until the complete custom pipeline is validated there.
+- **Alternatives:** Support multiple disk-image formats and host operating systems in the first milestone; require every contributor to use a Fedora virtual machine as their development host; provide only a source build environment and leave artifact support open.
+- **Consequences:** Build instructions and release validation can stay focused on one host/target pair. Contributors using other environments may still experiment, but Axiom will not claim those builds are supported until they are documented and validated.
+
+### DEC-031: Pin and audit production build inputs
+
+- **Status:** Accepted
+- **Date:** 2026-11-03
+- **Context:** The accepted treefile-to-OSTree pipeline resolves Fedora RPM dependencies, then Image Builder consumes an OSTree commit. rpm-ostree recommends keeping treefiles in Git and supports exact package requests and lockfiles; its `lockfile-repos` option is documented as experimental. Fedora CoreOS uses architecture-specific package lockfiles as part of its compose process. Fedora RPM signatures provide a check that packages came from Fedora and were not altered. See the [rpm-ostree treefile reference](https://coreos.github.io/rpm-ostree/treefile/), [Fedora CoreOS configuration](https://github.com/coreos/fedora-coreos-config), and [Fedora package verification guidance](https://fedoraproject.org/en/security/).
+- **Decision:** Keep the Axiom treefile and explicit repository configuration in version control, enabling only named Fedora repositories. For production builds, generate and strictly enforce an architecture-specific lockfile covering all resolved RPMs; review lockfile changes as source changes. Verify Fedora RPM signatures. Pin the compose and Image Builder tool versions, and use a digest-pinned builder container where a container is used. Record repository metadata identity, resolved package NEVRAs and signing-key fingerprints, tool versions, OSTree checksum, and qcow2 digest in the signed DEC-026 provenance manifest. Validate the lockfile workflow on the selected Fedora base before production; do not publish a production image if the chosen toolchain cannot enforce the resolved inputs.
+- **Alternatives:** Resolve against current Fedora repositories for each build and record only the resulting package list; pin only top-level packages; copy and maintain a private mirror of all Fedora RPMs before the first release.
+- **Consequences:** Production package updates require an explicit lockfile refresh and review, with RPM signature checks and provenance records. The first release depends on validating rpm-ostree lockfile support in its selected version; if that path is unstable, an equally strict alternative must be established before production publishing.
+
+### DEC-032: Architecture and release approval
+
+- **Status:** Accepted
+- **Date:** 2026-11-03
+- **Context:** Axiom has no formal governance or maintainer group yet. Its architecture decisions and security-sensitive release obligations need an accountable approver without assuming a larger team exists. The project already records decisions in this file, separates release signing from image builds, and requires a reviewed provenance manifest.
+- **Decision:** During prototype development, the repository owner acting as primary maintainer approves architecture decisions and prototype releases; record consequential architecture decisions in this log. Before production releases, name the release maintainers and publish their responsibilities. A production release requires a designated release maintainer to review the provenance manifest and artifact identity before signing and publication.
+- **Alternatives:** Require a multi-person committee for every decision from the start; let contributors merge architecture changes without an identified approver; leave release authority implicit.
+- **Consequences:** The prototype stage has a clear decision owner while the project is small. Governance must be revisited when additional maintainers join, and production release responsibilities must be published before the first production image.
+
+### DEC-033: Repository license and contribution terms
+
+- **Status:** Accepted
+- **Date:** 2026-11-03
+- **Context:** The repository has no license or contribution policy yet. Contributors need clear permission to use and modify Axiom's original work, and maintainers need a consistent rule for accepting contributions. The operating system also includes Fedora, KDE, and other upstream components that retain their own licenses.
+- **Decision:** License original Axiom repository content and project-owned code under Apache License 2.0. Require contributions to be submitted under the same license, without a separate copyright assignment. Track third-party components and notices under their respective upstream licenses; this repository license does not relicense them. Add the license text and a concise contribution guide before accepting external contributions.
+- **Alternatives:** Use MIT; use GPL-3.0-or-later for all original repository content; defer a license while accepting contributions.
+- **Consequences:** Apache-2.0 provides explicit copyright and patent grants while allowing reuse under stated conditions. Maintainers must distinguish original Axiom work from third-party content and include required notices. The project must add the license file before soliciting contributions.
+
+### DEC-034: Prototype compatibility and stability claims
+
+- **Status:** Accepted
+- **Date:** 2026-11-03
+- **Context:** The first useful release is a QEMU qcow2 prototype built on Fedora Kinoite, while broader hardware, application, and upgrade behavior has not yet been validated. Axiom should describe what has been tested without implying compatibility or long-term stability beyond the evidence.
+- **Decision:** For the prototype, claim support only for the documented x86-64 QEMU configuration and the tested first-boot, update, and rollback workflow. Publish a compatibility note listing tested virtual hardware and known limitations. Do not promise compatibility with arbitrary physical hardware, Windows applications or games, or future Axiom releases. Treat configuration formats, command-line interfaces, and project-owned APIs as unstable until a production release policy is adopted; announce breaking changes in prototype notes.
+- **Alternatives:** Promise broad PC and application compatibility from the first image; promise stable interfaces before they exist; publish no compatibility information until production.
+- **Consequences:** Claims stay tied to repeatable validation and newcomers can see the prototype's limits. Physical hardware and application compatibility require separate testing before any support claim, and production must define its own compatibility and stability policy.

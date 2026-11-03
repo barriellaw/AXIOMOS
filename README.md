@@ -13,10 +13,13 @@ This repository currently contains project definition documents only. No impleme
 - [System outline](docs/SYSTEM.md) — a conceptual map of the OS and its major boundaries.
 - [Roadmap](docs/ROADMAP.md) — staged work from definition through a first bootable system.
 - [Application installation contract](docs/APP_INSTALLATION.md) — first-release Flatpak source, permission, and user-control expectations.
+- [Contribution guide](CONTRIBUTING.md) — how to propose changes and contribution licensing.
 - [LLM contribution guide](LLM_GUIDE.md) — instructions for AI tools working in this repository.
 - [Open questions](docs/OPEN_QUESTIONS.md) — decisions that still need research or discussion.
 - [Foundation research](docs/FOUNDATION_RESEARCH.md) — preliminary comparison of Linux foundation candidates.
 
 ## Current status
 
-**Stage: project definition.** There are no code, build, or boot artifacts yet. The first engineering milestone is to turn the open questions into explicit, documented choices before implementation begins.
+**Stage: project definition.** Foundational choices are recorded, but there are no code, build, or boot artifacts yet. The next engineering milestone is to validate the selected custom image pipeline and produce a bootable x86-64 QEMU image.
+
+Unless stated otherwise, original Axiom project content and project-owned code are licensed under [Apache-2.0](LICENSE). Third-party components retain their respective licenses.

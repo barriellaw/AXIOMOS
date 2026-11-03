@@ -33,4 +33,4 @@ The application-installation path is ready for release when all of the following
 5. A user can update and remove an installed Flatpak through Discover and can inspect or change its permissions using the documented tool.
 6. Help text clearly distinguishes application changes from system deployments and states what OS rollback will not restore.
 
-The specific permission-management tool and any Axiom-authored permission explanation UI remain to be selected and validated; see [Open questions](OPEN_QUESTIONS.md).
+DEC-022 proposes KDE's Flatpak permissions page in System Settings as the supported management tool; it remains pending acceptance and target-session validation. Any Axiom-authored permission explanation UI also remains to be designed; see [Open questions](OPEN_QUESTIONS.md).

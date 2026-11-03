@@ -2,6 +2,18 @@
 
 These are foundational decisions, not implied defaults. Resolve them with explicit rationale before they become implementation assumptions.
 
+## Suggested decision order
+
+Answer these in sequence. Later choices depend on earlier ones, so keep implementation details open until the product scope is clear.
+
+1. **Audience and problem:** Choose who the first version serves and what need it addresses.
+2. **First useful release:** Define the smallest outcome that would make the project useful to that audience.
+3. **Initial target:** Choose a hardware or virtual machine target that can demonstrate that outcome.
+4. **System composition and delivery:** Select the base system and image approach that fit the target and the team's maintenance capacity.
+5. **Security and governance:** Set the minimum operating, update, support, and contribution expectations before implementation expands.
+
+The component-level choices below (such as bootloader and service manager) should follow from these decisions. This order is guidance, not a set of preselected answers.
+
 ## Product
 
 - Who is the initial audience: developers, general desktop users, servers, embedded devices, or another group?

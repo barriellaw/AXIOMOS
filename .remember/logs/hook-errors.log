@@ -70,3 +70,165 @@ Traceback (most recent call last):
 FileNotFoundError: no session files in /home/barriella/.claude/projects/-mnt-data-Documents-AXIOM-OS
 10:05:06 [extract] FAILED: the extract step produced no EXTRACT_FILE. Every variable it prints crosses into this script through assign_kv, so an absent one means the bridge lost it, not that there was nothing to extract. Stopping here rather than calling build-prompt with an empty path (#695).
 10:05:06 [session-end] WARNING: save-session.sh --force exited 1 at session end -- this session's unsaved tail may be lost. See /mnt/data/Documents/AXIOM_OS/.remember/logs/autonomous/session-end-100506-266798.log for what save-session.sh itself logged.
+Traceback (most recent call last):
+  File "<frozen runpy>", line 201, in _run_module_as_main
+  File "<frozen runpy>", line 87, in _run_code
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 935, in <module>
+    main()
+    ~~~~^^
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 889, in main
+    cmd_extract(session_id=sys.argv[2], project_dir=sys.argv[3])
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 95, in cmd_extract
+    r = extract_session(session_id=session_id, project_dir=project_dir, remember_dir=remember_dir)
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/extract.py", line 674, in extract_session
+    path = find_session(session_id, project_dir)
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/extract.py", line 309, in find_session
+    raise FileNotFoundError(f"no session files in {sdir}")
+FileNotFoundError: no session files in /home/barriella/.claude/projects/-mnt-data-Documents-AXIOM-OS
+11:09:07 [extract] FAILED: the extract step produced no EXTRACT_FILE. Every variable it prints crosses into this script through assign_kv, so an absent one means the bridge lost it, not that there was nothing to extract. Stopping here rather than calling build-prompt with an empty path (#695).
+11:09:07 [session-end] WARNING: save-session.sh --force exited 1 at session end -- this session's unsaved tail may be lost. See /mnt/data/Documents/AXIOM_OS/.remember/logs/autonomous/session-end-110907-510097.log for what save-session.sh itself logged.
+Traceback (most recent call last):
+  File "<frozen runpy>", line 201, in _run_module_as_main
+  File "<frozen runpy>", line 87, in _run_code
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 935, in <module>
+    main()
+    ~~~~^^
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 889, in main
+    cmd_extract(session_id=sys.argv[2], project_dir=sys.argv[3])
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 95, in cmd_extract
+    r = extract_session(session_id=session_id, project_dir=project_dir, remember_dir=remember_dir)
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/extract.py", line 674, in extract_session
+    path = find_session(session_id, project_dir)
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/extract.py", line 309, in find_session
+    raise FileNotFoundError(f"no session files in {sdir}")
+FileNotFoundError: no session files in /home/barriella/.claude/projects/-mnt-data-Documents-AXIOM-OS
+11:09:08 [extract] FAILED: the extract step produced no EXTRACT_FILE. Every variable it prints crosses into this script through assign_kv, so an absent one means the bridge lost it, not that there was nothing to extract. Stopping here rather than calling build-prompt with an empty path (#695).
+11:09:08 [session-end] WARNING: save-session.sh --force exited 1 at session end -- this session's unsaved tail may be lost. See /mnt/data/Documents/AXIOM_OS/.remember/logs/autonomous/session-end-110907-510108.log for what save-session.sh itself logged.
+Traceback (most recent call last):
+  File "<frozen runpy>", line 201, in _run_module_as_main
+  File "<frozen runpy>", line 87, in _run_code
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 935, in <module>
+    main()
+    ~~~~^^
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 889, in main
+    cmd_extract(session_id=sys.argv[2], project_dir=sys.argv[3])
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 95, in cmd_extract
+    r = extract_session(session_id=session_id, project_dir=project_dir, remember_dir=remember_dir)
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/extract.py", line 674, in extract_session
+    path = find_session(session_id, project_dir)
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/extract.py", line 309, in find_session
+    raise FileNotFoundError(f"no session files in {sdir}")
+FileNotFoundError: no session files in /home/barriella/.claude/projects/-mnt-data-Documents-AXIOM-OS
+11:09:10 [extract] FAILED: the extract step produced no EXTRACT_FILE. Every variable it prints crosses into this script through assign_kv, so an absent one means the bridge lost it, not that there was nothing to extract. Stopping here rather than calling build-prompt with an empty path (#695).
+11:09:10 [session-end] WARNING: save-session.sh --force exited 1 at session end -- this session's unsaved tail may be lost. See /mnt/data/Documents/AXIOM_OS/.remember/logs/autonomous/session-end-110910-510890.log for what save-session.sh itself logged.
+Traceback (most recent call last):
+  File "<frozen runpy>", line 201, in _run_module_as_main
+  File "<frozen runpy>", line 87, in _run_code
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 935, in <module>
+    main()
+    ~~~~^^
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 889, in main
+    cmd_extract(session_id=sys.argv[2], project_dir=sys.argv[3])
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 95, in cmd_extract
+    r = extract_session(session_id=session_id, project_dir=project_dir, remember_dir=remember_dir)
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/extract.py", line 674, in extract_session
+    path = find_session(session_id, project_dir)
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/extract.py", line 309, in find_session
+    raise FileNotFoundError(f"no session files in {sdir}")
+FileNotFoundError: no session files in /home/barriella/.claude/projects/-mnt-data-Documents-AXIOM-OS
+11:09:12 [extract] FAILED: the extract step produced no EXTRACT_FILE. Every variable it prints crosses into this script through assign_kv, so an absent one means the bridge lost it, not that there was nothing to extract. Stopping here rather than calling build-prompt with an empty path (#695).
+11:09:12 [session-end] WARNING: save-session.sh --force exited 1 at session end -- this session's unsaved tail may be lost. See /mnt/data/Documents/AXIOM_OS/.remember/logs/autonomous/session-end-110911-511522.log for what save-session.sh itself logged.
+Traceback (most recent call last):
+  File "<frozen runpy>", line 201, in _run_module_as_main
+  File "<frozen runpy>", line 87, in _run_code
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 935, in <module>
+    main()
+    ~~~~^^
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 889, in main
+    cmd_extract(session_id=sys.argv[2], project_dir=sys.argv[3])
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 95, in cmd_extract
+    r = extract_session(session_id=session_id, project_dir=project_dir, remember_dir=remember_dir)
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/extract.py", line 674, in extract_session
+    path = find_session(session_id, project_dir)
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/extract.py", line 309, in find_session
+    raise FileNotFoundError(f"no session files in {sdir}")
+FileNotFoundError: no session files in /home/barriella/.claude/projects/-mnt-data-Documents-AXIOM-OS
+11:09:32 [extract] FAILED: the extract step produced no EXTRACT_FILE. Every variable it prints crosses into this script through assign_kv, so an absent one means the bridge lost it, not that there was nothing to extract. Stopping here rather than calling build-prompt with an empty path (#695).
+11:09:32 [session-end] WARNING: save-session.sh --force exited 1 at session end -- this session's unsaved tail may be lost. See /mnt/data/Documents/AXIOM_OS/.remember/logs/autonomous/session-end-110932-513747.log for what save-session.sh itself logged.
+Traceback (most recent call last):
+  File "<frozen runpy>", line 201, in _run_module_as_main
+  File "<frozen runpy>", line 87, in _run_code
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 935, in <module>
+    main()
+    ~~~~^^
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 889, in main
+    cmd_extract(session_id=sys.argv[2], project_dir=sys.argv[3])
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 95, in cmd_extract
+    r = extract_session(session_id=session_id, project_dir=project_dir, remember_dir=remember_dir)
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/extract.py", line 674, in extract_session
+    path = find_session(session_id, project_dir)
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/extract.py", line 309, in find_session
+    raise FileNotFoundError(f"no session files in {sdir}")
+FileNotFoundError: no session files in /home/barriella/.claude/projects/-mnt-data-Documents-AXIOM-OS
+11:09:53 [extract] FAILED: the extract step produced no EXTRACT_FILE. Every variable it prints crosses into this script through assign_kv, so an absent one means the bridge lost it, not that there was nothing to extract. Stopping here rather than calling build-prompt with an empty path (#695).
+11:09:53 [session-end] WARNING: save-session.sh --force exited 1 at session end -- this session's unsaved tail may be lost. See /mnt/data/Documents/AXIOM_OS/.remember/logs/autonomous/session-end-110953-516960.log for what save-session.sh itself logged.
+Traceback (most recent call last):
+  File "<frozen runpy>", line 201, in _run_module_as_main
+  File "<frozen runpy>", line 87, in _run_code
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 935, in <module>
+    main()
+    ~~~~^^
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 889, in main
+    cmd_extract(session_id=sys.argv[2], project_dir=sys.argv[3])
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 95, in cmd_extract
+    r = extract_session(session_id=session_id, project_dir=project_dir, remember_dir=remember_dir)
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/extract.py", line 674, in extract_session
+    path = find_session(session_id, project_dir)
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/extract.py", line 309, in find_session
+    raise FileNotFoundError(f"no session files in {sdir}")
+FileNotFoundError: no session files in /home/barriella/.claude/projects/-mnt-data-Documents-AXIOM-OS
+11:09:57 [extract] FAILED: the extract step produced no EXTRACT_FILE. Every variable it prints crosses into this script through assign_kv, so an absent one means the bridge lost it, not that there was nothing to extract. Stopping here rather than calling build-prompt with an empty path (#695).
+11:09:57 [session-end] WARNING: save-session.sh --force exited 1 at session end -- this session's unsaved tail may be lost. See /mnt/data/Documents/AXIOM_OS/.remember/logs/autonomous/session-end-110956-519789.log for what save-session.sh itself logged.
+Traceback (most recent call last):
+  File "<frozen runpy>", line 201, in _run_module_as_main
+  File "<frozen runpy>", line 87, in _run_code
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 935, in <module>
+    main()
+    ~~~~^^
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 889, in main
+    cmd_extract(session_id=sys.argv[2], project_dir=sys.argv[3])
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 95, in cmd_extract
+    r = extract_session(session_id=session_id, project_dir=project_dir, remember_dir=remember_dir)
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/extract.py", line 674, in extract_session
+    path = find_session(session_id, project_dir)
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/extract.py", line 309, in find_session
+    raise FileNotFoundError(f"no session files in {sdir}")
+FileNotFoundError: no session files in /home/barriella/.claude/projects/-mnt-data-Documents-AXIOM-OS
+11:10:43 [extract] FAILED: the extract step produced no EXTRACT_FILE. Every variable it prints crosses into this script through assign_kv, so an absent one means the bridge lost it, not that there was nothing to extract. Stopping here rather than calling build-prompt with an empty path (#695).
+11:10:43 [session-end] WARNING: save-session.sh --force exited 1 at session end -- this session's unsaved tail may be lost. See /mnt/data/Documents/AXIOM_OS/.remember/logs/autonomous/session-end-111043-522853.log for what save-session.sh itself logged.
+Traceback (most recent call last):
+  File "<frozen runpy>", line 201, in _run_module_as_main
+  File "<frozen runpy>", line 87, in _run_code
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 935, in <module>
+    main()
+    ~~~~^^
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 889, in main
+    cmd_extract(session_id=sys.argv[2], project_dir=sys.argv[3])
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/shell.py", line 95, in cmd_extract
+    r = extract_session(session_id=session_id, project_dir=project_dir, remember_dir=remember_dir)
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/extract.py", line 674, in extract_session
+    path = find_session(session_id, project_dir)
+  File "/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1/pipeline/extract.py", line 309, in find_session
+    raise FileNotFoundError(f"no session files in {sdir}")
+FileNotFoundError: no session files in /home/barriella/.claude/projects/-mnt-data-Documents-AXIOM-OS
+11:28:25 [extract] FAILED: the extract step produced no EXTRACT_FILE. Every variable it prints crosses into this script through assign_kv, so an absent one means the bridge lost it, not that there was nothing to extract. Stopping here rather than calling build-prompt with an empty path (#695).
+11:28:25 [session-end] WARNING: save-session.sh --force exited 1 at session end -- this session's unsaved tail may be lost. See /mnt/data/Documents/AXIOM_OS/.remember/logs/autonomous/session-end-112825-92212.log for what save-session.sh itself logged.

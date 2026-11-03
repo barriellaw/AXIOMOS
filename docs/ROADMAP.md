@@ -4,8 +4,8 @@ This is a sequence of decision gates, not a promise of dates. Move a stage forwa
 
 ## 0. Project definition — current
 
-- Agree on the audience and the problem Axiom OS should solve.
-- Choose an initial hardware target and define what “first boot” means.
+- Record the accepted audience, problem, and smallest useful release in project guidance.
+- Specify remaining boot details for the accepted QEMU x86-64 target.
 - Decide the system composition and image-building approach.
 - Define the security, update, and maintenance expectations.
 

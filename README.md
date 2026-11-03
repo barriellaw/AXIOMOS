@@ -12,8 +12,10 @@ This repository currently contains project definition documents only. No impleme
 - [Product vision](docs/VISION.md) — intended audience experience and product goals.
 - [System outline](docs/SYSTEM.md) — a conceptual map of the OS and its major boundaries.
 - [Roadmap](docs/ROADMAP.md) — staged work from definition through a first bootable system.
+- [Application installation contract](docs/APP_INSTALLATION.md) — first-release Flatpak source, permission, and user-control expectations.
 - [LLM contribution guide](LLM_GUIDE.md) — instructions for AI tools working in this repository.
 - [Open questions](docs/OPEN_QUESTIONS.md) — decisions that still need research or discussion.
+- [Foundation research](docs/FOUNDATION_RESEARCH.md) — preliminary comparison of Linux foundation candidates.
 
 ## Current status
 

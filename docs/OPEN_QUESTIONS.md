@@ -17,15 +17,10 @@ The component-level choices below (such as bootloader and service manager) shoul
 ## Product
 
 - Confirm whether **Axiom OS** is the lasting project name or only a codename.
-- Who is the initial audience: developers, general desktop users, servers, embedded devices, or another group?
-- What concrete problem or experience will distinguish Axiom OS from existing Linux distributions?
-- What is the smallest useful first release?
 
 ## Platform and system composition
 
-- What initial hardware or virtual machine target should define the first bootable milestone?
-- Should the system start from an existing distribution or assemble a minimal system from upstream components?
-- Which bootloader, init/service manager, libc, and base user-space components best fit that target?
+- Which init/service manager, libc, and base user-space components should Axiom inherit from Fedora Kinoite, and which should it replace?
 - Which components are project-owned Rust software, and which should remain established upstream components?
 
 ## Build and delivery
@@ -36,10 +31,12 @@ The component-level choices below (such as bootloader and service manager) shoul
 
 ## Security and operations
 
-- What threat model and privilege model should guide the base system?
 - How will updates be authenticated, applied, recovered, and rolled back?
+- Which signing-key format, storage, backup, rotation, and trust-recovery process can Axiom maintain?
+- What build-input provenance records and review process should production releases require?
+- Which supported desktop tools should Axiom recommend for inspecting and changing Flatpak permissions?
 - What logging, remote access, and default network behavior are appropriate for the audience?
-- What support lifetime and security response process can the project maintain?
+- What security response targets can the project maintain?
 
 ## Governance
 

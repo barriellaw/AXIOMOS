@@ -115,3 +115,66 @@
 11:28:25 [extract] session 657fe4ac-cffa-4978-ae99-74fcc53ea376
 11:28:25 [extract] FAILED: the extract step produced no EXTRACT_FILE. Every variable it prints crosses into this script through assign_kv, so an absent one means the bridge lost it, not that there was nothing to extract. Stopping here rather than calling build-prompt with an empty path (#695).
 11:28:25 [session-end] WARNING: save-session.sh --force exited 1 at session end -- this session's unsaved tail may be lost. See /mnt/data/Documents/AXIOM_OS/.remember/logs/autonomous/session-end-112825-92212.log for what save-session.sh itself logged.
+15:31:58 [hook] session-end: reason=other session=3dfaffcf-46a3-4a91-95d8-3165b64c8d1f
+15:31:59 [hook] save-session: PROJECT_DIR=/mnt/data/Documents/AXIOM_OS PIPELINE_DIR=/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1 PYTHON=python3 REMEMBER_DIR=/mnt/data/Documents/AXIOM_OS/.remember
+15:31:59 [force] bypassing cooldown + min msgs
+15:31:59 [extract] session 3dfaffcf-46a3-4a91-95d8-3165b64c8d1f
+15:31:59 [extract] FAILED: the extract step produced no EXTRACT_FILE. Every variable it prints crosses into this script through assign_kv, so an absent one means the bridge lost it, not that there was nothing to extract. Stopping here rather than calling build-prompt with an empty path (#695).
+15:31:59 [session-end] WARNING: save-session.sh --force exited 1 at session end -- this session's unsaved tail may be lost. See /mnt/data/Documents/AXIOM_OS/.remember/logs/autonomous/session-end-153158-1070339.log for what save-session.sh itself logged.
+15:32:15 [hook] session-start: PROJECT_DIR=/mnt/data/Documents/AXIOM_OS PIPELINE_DIR=/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1 REMEMBER_DIR=/mnt/data/Documents/AXIOM_OS/.remember
+15:32:15 [start-cache] refused injecting /mnt/data/Documents/AXIOM_OS/.remember/tmp/start-context.cache: git-tracked
+15:32:15 [hook] session-start took 0s
+15:32:25 [hook] session-end: reason=other session=02e64c2a-99e7-46b6-9df6-31202bb9528e
+15:32:25 [hook] save-session: PROJECT_DIR=/mnt/data/Documents/AXIOM_OS PIPELINE_DIR=/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1 PYTHON=python3 REMEMBER_DIR=/mnt/data/Documents/AXIOM_OS/.remember
+15:32:25 [force] bypassing cooldown + min msgs
+15:32:25 [extract] session 02e64c2a-99e7-46b6-9df6-31202bb9528e
+15:32:25 [extract] FAILED: the extract step produced no EXTRACT_FILE. Every variable it prints crosses into this script through assign_kv, so an absent one means the bridge lost it, not that there was nothing to extract. Stopping here rather than calling build-prompt with an empty path (#695).
+15:32:25 [session-end] WARNING: save-session.sh --force exited 1 at session end -- this session's unsaved tail may be lost. See /mnt/data/Documents/AXIOM_OS/.remember/logs/autonomous/session-end-153225-1075490.log for what save-session.sh itself logged.
+15:32:41 [hook] session-start: PROJECT_DIR=/mnt/data/Documents/AXIOM_OS PIPELINE_DIR=/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1 REMEMBER_DIR=/mnt/data/Documents/AXIOM_OS/.remember
+15:32:41 [start-cache] refused injecting /mnt/data/Documents/AXIOM_OS/.remember/tmp/start-context.cache: git-tracked
+15:32:41 [hook] session-start took 0s
+15:33:43 [hook] session-start: PROJECT_DIR=/mnt/data/Documents/AXIOM_OS PIPELINE_DIR=/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1 REMEMBER_DIR=/mnt/data/Documents/AXIOM_OS/.remember
+15:33:43 [start-cache] refused injecting /mnt/data/Documents/AXIOM_OS/.remember/tmp/start-context.cache: git-tracked
+15:33:43 [hook] session-start took 0s
+15:33:46 [hook] session-end: reason=other session=c5656f98-5705-43f6-b4cc-a987a28e6d1c
+15:33:46 [hook] save-session: PROJECT_DIR=/mnt/data/Documents/AXIOM_OS PIPELINE_DIR=/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1 PYTHON=python3 REMEMBER_DIR=/mnt/data/Documents/AXIOM_OS/.remember
+15:33:46 [force] bypassing cooldown + min msgs
+15:33:46 [extract] session c5656f98-5705-43f6-b4cc-a987a28e6d1c
+15:33:47 [extract] FAILED: the extract step produced no EXTRACT_FILE. Every variable it prints crosses into this script through assign_kv, so an absent one means the bridge lost it, not that there was nothing to extract. Stopping here rather than calling build-prompt with an empty path (#695).
+15:33:47 [session-end] WARNING: save-session.sh --force exited 1 at session end -- this session's unsaved tail may be lost. See /mnt/data/Documents/AXIOM_OS/.remember/logs/autonomous/session-end-153346-1085596.log for what save-session.sh itself logged.
+15:38:23 [hook] session-start: PROJECT_DIR=/mnt/data/Documents/AXIOM_OS PIPELINE_DIR=/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1 REMEMBER_DIR=/mnt/data/Documents/AXIOM_OS/.remember
+15:38:23 [start-cache] refused injecting /mnt/data/Documents/AXIOM_OS/.remember/tmp/start-context.cache: git-tracked
+15:38:23 [hook] session-start took 0s
+15:38:25 [hook] session-start: PROJECT_DIR=/mnt/data/Documents/AXIOM_OS PIPELINE_DIR=/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1 REMEMBER_DIR=/mnt/data/Documents/AXIOM_OS/.remember
+15:38:25 [hook] session-start: PROJECT_DIR=/mnt/data/Documents/AXIOM_OS PIPELINE_DIR=/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1 REMEMBER_DIR=/mnt/data/Documents/AXIOM_OS/.remember
+15:38:25 [start-cache] refused injecting /mnt/data/Documents/AXIOM_OS/.remember/tmp/start-context.cache: git-tracked
+15:38:25 [hook] session-start took 1s
+15:38:25 [start-cache] refused injecting /mnt/data/Documents/AXIOM_OS/.remember/tmp/start-context.cache: git-tracked
+15:38:25 [hook] session-start took 0s
+15:38:27 [hook] session-end: reason=other session=dec292fb-920c-4e7d-84e2-ecd628b3e7d6
+15:38:27 [hook] save-session: PROJECT_DIR=/mnt/data/Documents/AXIOM_OS PIPELINE_DIR=/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1 PYTHON=python3 REMEMBER_DIR=/mnt/data/Documents/AXIOM_OS/.remember
+15:38:27 [force] bypassing cooldown + min msgs
+15:38:27 [extract] session dec292fb-920c-4e7d-84e2-ecd628b3e7d6
+15:38:28 [hook] session-end: reason=other session=822446f3-81d0-4e5c-866a-000179328b2a
+15:38:28 [extract] FAILED: the extract step produced no EXTRACT_FILE. Every variable it prints crosses into this script through assign_kv, so an absent one means the bridge lost it, not that there was nothing to extract. Stopping here rather than calling build-prompt with an empty path (#695).
+15:38:28 [session-end] WARNING: save-session.sh --force exited 1 at session end -- this session's unsaved tail may be lost. See /mnt/data/Documents/AXIOM_OS/.remember/logs/autonomous/session-end-153827-1109228.log for what save-session.sh itself logged.
+15:38:28 [hook] save-session: PROJECT_DIR=/mnt/data/Documents/AXIOM_OS PIPELINE_DIR=/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1 PYTHON=python3 REMEMBER_DIR=/mnt/data/Documents/AXIOM_OS/.remember
+15:38:28 [force] bypassing cooldown + min msgs
+15:38:28 [extract] session 822446f3-81d0-4e5c-866a-000179328b2a
+15:38:28 [extract] FAILED: the extract step produced no EXTRACT_FILE. Every variable it prints crosses into this script through assign_kv, so an absent one means the bridge lost it, not that there was nothing to extract. Stopping here rather than calling build-prompt with an empty path (#695).
+15:38:28 [session-end] WARNING: save-session.sh --force exited 1 at session end -- this session's unsaved tail may be lost. See /mnt/data/Documents/AXIOM_OS/.remember/logs/autonomous/session-end-153828-1109344.log for what save-session.sh itself logged.
+15:38:32 [hook] session-end: reason=other session=8cef601c-5d74-41ff-a9f4-ee3f28ef7a1e
+15:38:32 [hook] save-session: PROJECT_DIR=/mnt/data/Documents/AXIOM_OS PIPELINE_DIR=/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1 PYTHON=python3 REMEMBER_DIR=/mnt/data/Documents/AXIOM_OS/.remember
+15:38:32 [force] bypassing cooldown + min msgs
+15:38:32 [extract] session 8cef601c-5d74-41ff-a9f4-ee3f28ef7a1e
+15:38:32 [extract] FAILED: the extract step produced no EXTRACT_FILE. Every variable it prints crosses into this script through assign_kv, so an absent one means the bridge lost it, not that there was nothing to extract. Stopping here rather than calling build-prompt with an empty path (#695).
+15:38:32 [session-end] WARNING: save-session.sh --force exited 1 at session end -- this session's unsaved tail may be lost. See /mnt/data/Documents/AXIOM_OS/.remember/logs/autonomous/session-end-153832-1110329.log for what save-session.sh itself logged.
+17:16:08 [hook] session-start: PROJECT_DIR=/mnt/data/Documents/AXIOM_OS PIPELINE_DIR=/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1 REMEMBER_DIR=/mnt/data/Documents/AXIOM_OS/.remember
+17:16:08 [start-cache] refused injecting /mnt/data/Documents/AXIOM_OS/.remember/tmp/start-context.cache: git-tracked
+17:16:08 [hook] session-start took 0s
+17:16:09 [hook] session-end: reason=other session=53cd4f65-37b6-4a4c-a886-da8b449e0e6f
+17:16:09 [hook] save-session: PROJECT_DIR=/mnt/data/Documents/AXIOM_OS PIPELINE_DIR=/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1 PYTHON=python3 REMEMBER_DIR=/mnt/data/Documents/AXIOM_OS/.remember
+17:16:09 [force] bypassing cooldown + min msgs
+17:16:09 [extract] session 53cd4f65-37b6-4a4c-a886-da8b449e0e6f
+17:16:09 [extract] FAILED: the extract step produced no EXTRACT_FILE. Every variable it prints crosses into this script through assign_kv, so an absent one means the bridge lost it, not that there was nothing to extract. Stopping here rather than calling build-prompt with an empty path (#695).
+17:16:09 [session-end] WARNING: save-session.sh --force exited 1 at session end -- this session's unsaved tail may be lost. See /mnt/data/Documents/AXIOM_OS/.remember/logs/autonomous/session-end-171609-1506569.log for what save-session.sh itself logged.

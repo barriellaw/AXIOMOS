@@ -1,0 +1,18 @@
+09:37:39 [hook] session-start: PROJECT_DIR=/mnt/data/Documents/Rusty_OS PIPELINE_DIR=/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1 REMEMBER_DIR=/mnt/data/Documents/Rusty_OS/.remember
+09:37:39 [hook] session-start: PROJECT_DIR=/mnt/data/Documents/Rusty_OS PIPELINE_DIR=/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1 REMEMBER_DIR=/mnt/data/Documents/Rusty_OS/.remember
+09:37:39 [hook] session-start took 0s
+09:37:39 [hook] session-start took 0s
+09:37:42 [hook] session-end: reason=other session=2cd05582-e2cd-4e93-869e-1953e4d70de3
+09:37:43 [hook] save-session: PROJECT_DIR=/mnt/data/Documents/Rusty_OS PIPELINE_DIR=/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1 PYTHON=python3 REMEMBER_DIR=/mnt/data/Documents/Rusty_OS/.remember
+09:37:43 [force] bypassing cooldown + min msgs
+09:37:43 [extract] session 2cd05582-e2cd-4e93-869e-1953e4d70de3
+09:37:43 [extract] FAILED: the extract step produced no EXTRACT_FILE. Every variable it prints crosses into this script through assign_kv, so an absent one means the bridge lost it, not that there was nothing to extract. Stopping here rather than calling build-prompt with an empty path (#695).
+09:37:43 [session-end] WARNING: save-session.sh --force exited 1 at session end -- this session's unsaved tail may be lost. See /mnt/data/Documents/Rusty_OS/.remember/logs/autonomous/session-end-093742-144241.log for what save-session.sh itself logged.
+09:38:41 [hook] session-start: PROJECT_DIR=/mnt/data/Documents/Rusty_OS PIPELINE_DIR=/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1 REMEMBER_DIR=/mnt/data/Documents/Rusty_OS/.remember
+09:38:42 [hook] session-start took 1s
+09:38:44 [hook] session-end: reason=other session=caef8fd0-d9c6-480c-bb56-611266bc31c1
+09:38:44 [hook] save-session: PROJECT_DIR=/mnt/data/Documents/Rusty_OS PIPELINE_DIR=/home/barriella/.claude/plugins/cache/claude-plugins-official/remember/0.43.1 PYTHON=python3 REMEMBER_DIR=/mnt/data/Documents/Rusty_OS/.remember
+09:38:44 [force] bypassing cooldown + min msgs
+09:38:44 [extract] session caef8fd0-d9c6-480c-bb56-611266bc31c1
+09:38:45 [extract] FAILED: the extract step produced no EXTRACT_FILE. Every variable it prints crosses into this script through assign_kv, so an absent one means the bridge lost it, not that there was nothing to extract. Stopping here rather than calling build-prompt with an empty path (#695).
+09:38:45 [session-end] WARNING: save-session.sh --force exited 1 at session end -- this session's unsaved tail may be lost. See /mnt/data/Documents/Rusty_OS/.remember/logs/autonomous/session-end-093844-152310.log for what save-session.sh itself logged.

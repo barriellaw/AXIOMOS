@@ -16,8 +16,9 @@ The component-level choices below (such as bootloader and service manager) shoul
 
 ## Product
 
+- Confirm whether **Axiom OS** is the lasting project name or only a codename.
 - Who is the initial audience: developers, general desktop users, servers, embedded devices, or another group?
-- What concrete problem or experience will distinguish Rusty OS from existing Linux distributions?
+- What concrete problem or experience will distinguish Axiom OS from existing Linux distributions?
 - What is the smallest useful first release?
 
 ## Platform and system composition

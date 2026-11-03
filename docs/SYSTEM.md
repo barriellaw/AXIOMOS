@@ -4,9 +4,9 @@ This document describes the intended shape of the system without selecting concr
 
 ## System boundary
 
-Rusty OS is the complete operating system experience assembled around the Linux kernel. The kernel provides core mechanisms such as scheduling, memory management, device drivers, and system calls. Project decisions above that boundary determine the boot flow, system services, user environment, packaging, updates, and supported hardware.
+Axiom OS is the complete operating system experience assembled around the Linux kernel. The kernel provides core mechanisms such as scheduling, memory management, device drivers, and system calls. Project decisions above that boundary determine the boot flow, system services, user environment, packaging, updates, and supported hardware.
 
-Rusty OS should track upstream Linux unless a documented requirement justifies a patch. Any such patch should have an owner, rationale, and plan for upstreaming or removal.
+Axiom OS should track upstream Linux unless a documented requirement justifies a patch. Any such patch should have an owner, rationale, and plan for upstreaming or removal.
 
 ## Conceptual layers
 

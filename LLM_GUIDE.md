@@ -4,10 +4,11 @@ This repository is defining a new OS project. Treat its documentation as the cur
 
 ## Project facts
 
-- The OS is built on the upstream Linux kernel.
+- Axiom OS is the working project name; the OS is built on the upstream Linux kernel.
 - Rust is the primary language for project-owned system software where practical.
-- Rusty OS is not a new kernel, and it is not a claim that the Linux kernel itself is written in Rust.
+- Axiom OS is not a new kernel, and it is not a claim that the Linux kernel itself is written in Rust.
 - At this stage, the repository is documentation-only. Do not create implementation, configuration, build, or boot files unless a task explicitly asks to move into implementation.
+- Product goals in `docs/VISION.md` are aspirations, not claims that features already exist or guarantees of universal compatibility.
 
 ## How to work here
 

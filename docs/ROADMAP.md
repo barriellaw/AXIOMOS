@@ -4,7 +4,7 @@ This is a sequence of decision gates, not a promise of dates. Move a stage forwa
 
 ## 0. Project definition — current
 
-- Agree on the audience and the problem Rusty OS should solve.
+- Agree on the audience and the problem Axiom OS should solve.
 - Choose an initial hardware target and define what “first boot” means.
 - Decide the system composition and image-building approach.
 - Define the security, update, and maintenance expectations.

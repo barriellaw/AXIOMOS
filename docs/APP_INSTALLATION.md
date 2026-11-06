@@ -2,6 +2,8 @@
 
 This contract applies to the first Axiom desktop release based on Fedora Kinoite and KDE Plasma. It records the user-visible behavior required by [DEC-019](DECISIONS.md#dec-019-application-installation-boundary), [DEC-020](DECISIONS.md#dec-020-default-flatpak-application-source), and [DEC-021](DECISIONS.md#dec-021-flatpak-permission-baseline). It is a target for implementation and validation, not a claim that the behavior already exists.
 
+Per [DEC-037](DECISIONS.md#dec-037-flatpak-acceptance-gate), this full contract is required for first-release readiness but does not block the initial boot and system update/rollback workflow demo.
+
 ## Supported path
 
 - Use KDE Discover with its Flatpak backend as the supported graphical path for installing, updating, and removing desktop applications.

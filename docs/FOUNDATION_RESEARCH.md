@@ -1,7 +1,7 @@
 # Linux foundation research: first pass
 
-**Status:** Fedora Atomic Desktop/Kinoite and the treefile → OSTree commit → Image Builder pipeline are selected; end-to-end build reproducibility remains to be validated.
-**Reviewed:** 2026-11-03
+**Status:** Fedora 45 Kinoite and the treefile → OSTree commit → Image Builder pipeline are selected for the initial prototype; release-specific pipeline behavior and end-to-end build reproducibility remain to be validated.
+**Reviewed:** 2026-11-05
 
 This note compares three candidates named in the project charter. It is a first-pass screen, not a complete technical evaluation or endorsement. The question is which foundation best supports Axiom OS's desktop goals, user control, recoverable updates, hardware support, and maintainable Rust services.
 
@@ -32,9 +32,9 @@ The first release is now defined as a reproducible x86-64 VM desktop for newcome
 - **NixOS** has a strong match for system generations and rollback, and its rebuild tooling can produce QEMU virtual machines. It remains a viable alternative if declarative configuration is itself central to the product. Its configuration model would also become part of Axiom's user and maintainer experience, so that learning and support cost needs evaluation. [NixOS generations](https://wiki.nixos.org/wiki/NixOS) and [nixos-rebuild](https://wiki.nixos.org/wiki/Nixos-rebuild).
 - **Universal Blue** demonstrates a custom image workflow using Containerfiles and automated builds, but it is an image ecosystem built on Fedora Atomic foundations rather than a separate base distribution. Taking one of its maintained images would add an upstream project relationship to Axiom's foundation. Its build patterns can be studied without adopting its finished images. [Universal Blue](https://universal-blue.org/) and [contributor build guide](https://universal-blue.org/contributing.html).
 
-Fedora's Fedora 45 proposal moves Atomic Desktop ISO and disk-image generation to Image Builder and introduces preview qcow2 images for Silverblue and Kinoite. This makes Fedora-native VM artifacts worth evaluating for the agreed QEMU target, while the preview status and the process for producing a project-customized image still need validation. [Fedora 45 Atomic Desktop image proposal](https://discussion.fedoraproject.org/t/f45-change-proposal-build-atomic-desktops-disk-images-with-image-builder-systemwide/179631).
+Fedora 45 is the selected base release for Axiom's initial validation. Fedora's own Kinoite qcow2 artifact is useful as a reference, but Axiom must validate its customized pipeline separately. [Fedora 45 Atomic Desktop image proposal](https://discussion.fedoraproject.org/t/f45-change-proposal-build-atomic-desktops-disk-images-with-image-builder-systemwide/179631).
 
-There is a distinction between Fedora producing its own Kinoite qcow2 artifact and Axiom reproducing a customized Kinoite image. Fedora 45's Kinoite QEMU qcow2 is a preview. The Image Builder docs list a `kinoite-qcow2` target, but its supported blueprint options cover system files, services, users, and related machine setup; they do not include a package list. The Kinoite image type and Image Builder's generic OSTree input path therefore provide the artifact-conversion pieces, but a customized package set needs a separately composed OSTree commit. [Fedora Kinoite 45 download](https://fedoraproject.org/atomic-desktops/kinoite/download/beta/), [Kinoite qcow2 image description](https://osbuild.org/docs/user-guide/image-descriptions/fedora-44/kinoite-qcow2/), and [Image Builder OSTree workflow](https://osbuild.org/docs/developer-guide/projects/image-builder/usage/).
+There is a distinction between Fedora producing its own Kinoite qcow2 artifact and Axiom reproducing a customized Kinoite image. The Image Builder docs list a `kinoite-qcow2` target, but its supported blueprint options cover system files, services, users, and related machine setup; they do not include a package list. The Kinoite image type and Image Builder's generic OSTree input path therefore provide the artifact-conversion pieces, but a customized package set needs a separately composed OSTree commit. [Fedora Kinoite download](https://fedoraproject.org/atomic-desktops/kinoite/download/), [Kinoite qcow2 image description](https://osbuild.org/docs/user-guide/image-descriptions/fedora-44/kinoite-qcow2/), and [Image Builder OSTree workflow](https://osbuild.org/docs/developer-guide/projects/image-builder/usage/).
 
 The Kinoite 45 preview qcow2 can be used as a reference artifact while researching the custom image pipeline. It will not be used as Axiom's next validation image; the project will settle a reproducible custom pipeline first, as recorded in [DEC-007](DECISIONS.md#dec-007-initial-vm-workflow-evaluation-image).
 
@@ -56,11 +56,11 @@ rpm-ostree runs a privileged system D-Bus daemon and maps operations to polkit a
 
 The Image Builder documentation for Fedora Kinoite's qcow2 image describes a UEFI/GPT disk using Fedora's GRUB EFI and shim packages. Axiom accepted inheriting this layout and avoiding custom bootloader changes in the first milestone. Secure Boot signing and key ownership remain separate security decisions. Validate the profile against the Fedora release used for Axiom's build. [Kinoite qcow2 image description](https://osbuild.org/docs/user-guide/image-descriptions/fedora-44/kinoite-qcow2/) and [Fedora 45 Atomic Desktop build change](https://fedoraproject.org/wiki/Changes/BuildAtomicDesktopsWithImageBuilder).
 
-### Current proposal
+### Accepted direction and validation
 
-Use a Fedora Atomic Desktop as the initial foundation and evaluate Fedora Image Builder for producing the QEMU disk image. The selected desktop is Fedora Kinoite with KDE Plasma. Prefer Fedora's own base and image tooling for the prototype; treat Universal Blue as a source of build-process examples, not as a required project dependency. Keep the update/rollback implementation aligned with the selected Fedora deployment model, then validate that a newcomer can understand and complete the recovery workflow.
+Use Fedora 45 Kinoite with KDE Plasma as the initial foundation. Maintain an Axiom treefile, compose a versioned OSTree commit from pinned Fedora inputs, and use Image Builder to produce the x86-64 QEMU qcow2 artifact. Prefer Fedora's own base and image tooling for the prototype; treat Universal Blue as a source of build-process examples, not as a required project dependency. Keep the update/rollback implementation aligned with Fedora's deployment model.
 
-This proposal favors the closest existing desktop/update fit and a QEMU artifact path. It does not establish that Image Builder is ready for Axiom's reproducibility requirements, or that Fedora's current rollback path meets the product's usability goal. Those are validation items before implementation commitments.
+This direction is recorded in [DEC-005](DECISIONS.md#dec-005-linux-foundation-and-vm-image-path), [DEC-008](DECISIONS.md#dec-008-custom-kinoite-image-pipeline), and [DEC-035](DECISIONS.md#dec-035-initial-fedora-release). It does not establish that the Fedora 45 Image Builder path meets Axiom's repeatability requirements or that Fedora's rollback path meets the newcomer usability goal. Validate those before making implementation or product claims.
 
 ### Desktop variant question
 

@@ -320,3 +320,39 @@ See [Open questions](OPEN_QUESTIONS.md) for the remaining decision backlog.
 - **Decision:** For the prototype, claim support only for the documented x86-64 QEMU configuration and the tested first-boot, update, and rollback workflow. Publish a compatibility note listing tested virtual hardware and known limitations. Do not promise compatibility with arbitrary physical hardware, Windows applications or games, or future Axiom releases. Treat configuration formats, command-line interfaces, and project-owned APIs as unstable until a production release policy is adopted; announce breaking changes in prototype notes.
 - **Alternatives:** Promise broad PC and application compatibility from the first image; promise stable interfaces before they exist; publish no compatibility information until production.
 - **Consequences:** Claims stay tied to repeatable validation and newcomers can see the prototype's limits. Physical hardware and application compatibility require separate testing before any support claim, and production must define its own compatibility and stability policy.
+
+### DEC-035: Initial Fedora release
+
+- **Status:** Accepted
+- **Date:** 2026-11-05
+- **Context:** The custom Kinoite image pipeline needs a concrete Fedora release for its first QEMU validation. Fedora 45 is the current stable release, while Fedora 44 is the previous stable release and Fedora 45's release-specific image path still needs validation.
+- **Decision:** Use Fedora 45 as the base release for the initial Axiom image-pipeline validation and prototype. Do not treat this as a permanent release-tracking policy; select and document the base release for each later Axiom release based on support status and pipeline validation.
+- **Alternatives:** Start with Fedora 44 to reduce immediate change; wait for a later Fedora release; use a development stream.
+- **Consequences:** The first validation must confirm Fedora 45 Kinoite inputs, tree composition, lockfile behavior, and Image Builder qcow2 output on the supported build host. If a release-specific blocker prevents that path, document the evidence and return with a scoped alternative rather than silently changing the base.
+
+### DEC-036: Secure Boot prototype scope
+
+- **Status:** Accepted
+- **Date:** 2026-11-05
+- **Context:** The initial QEMU prototype inherits Fedora Kinoite's UEFI/GPT boot profile, while Secure Boot validation and Axiom signing key ownership require additional setup and policy.
+- **Decision:** Defer Secure Boot validation and Axiom-owned Secure Boot signing from the initial image-pipeline prototype. Revisit Secure Boot closer to public release, before making any public support or security claim.
+- **Alternatives:** Validate Secure Boot in the first QEMU boot gate using Fedora's existing trust chain; introduce Axiom-owned signing keys during prototype development.
+- **Consequences:** The prototype boot gate uses UEFI without a Secure Boot support claim. Before public release, decide the supported Secure Boot configuration, signing-key custody and rotation, and validation procedure. This does not change the requirement for authenticated Axiom OSTree updates in DEC-014.
+
+### DEC-037: Flatpak acceptance gate
+
+- **Status:** Accepted
+- **Date:** 2026-11-05
+- **Context:** The first useful release includes a newcomer-facing system update and rollback workflow, while the application-installation contract contains additional Flatpak source, permission, and application-management requirements.
+- **Decision:** Keep the full `APP_INSTALLATION.md` acceptance contract as a requirement for first-release readiness, but do not make it a blocker for the initial boot and system update/rollback workflow demo. Validate the application path after that focused demo and before declaring the first release ready.
+- **Alternatives:** Require every Flatpak criterion before the initial system workflow demo; defer some application-installation criteria beyond the first release.
+- **Consequences:** The first demo can focus on boot and system recovery, while release readiness still requires all six application-installation criteria to pass in the target QEMU desktop. Do not describe the broader first release as complete until they pass.
+
+### DEC-038: Repeatable QEMU baseline profile
+
+- **Status:** Accepted
+- **Date:** 2026-11-05
+- **Context:** QEMU validation needs a stable virtual hardware configuration so build and boot results can be compared. Contributors may need more resources for local experimentation.
+- **Decision:** Define one fixed baseline QEMU machine profile for supported build and validation reports. Document optional higher-resource settings separately; do not treat them as the baseline or claim them as separately supported configurations without validation.
+- **Alternatives:** Use a minimum profile with many freely varying devices and resource settings; document only a recommended profile without a fixed baseline.
+- **Consequences:** The concrete CPU, memory, disk, display, and network values remain to be selected from the Fedora 45 image requirements and recorded in build instructions. Validation reports must identify deviations from the baseline.

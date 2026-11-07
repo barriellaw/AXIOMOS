@@ -356,3 +356,30 @@ See [Open questions](OPEN_QUESTIONS.md) for the remaining decision backlog.
 - **Decision:** Define one fixed baseline QEMU machine profile for supported build and validation reports. Document optional higher-resource settings separately; do not treat them as the baseline or claim them as separately supported configurations without validation.
 - **Alternatives:** Use a minimum profile with many freely varying devices and resource settings; document only a recommended profile without a fixed baseline.
 - **Consequences:** The concrete CPU, memory, disk, display, and network values remain to be selected from the Fedora 45 image requirements and recorded in build instructions. Validation reports must identify deviations from the baseline.
+
+### DEC-039: Prototype Fedora input retention
+
+- **Status:** Accepted
+- **Date:** 2026-11-07
+- **Context:** The Fedora 45 prototype needs sufficiently stable inputs to investigate and repeat image builds, while production infrastructure and a complete repository mirror are out of scope. DEC-031 defines stricter production input controls.
+- **Decision:** For prototype builds, use the strongest repository snapshot and package-locking mechanism that the selected Fedora 45 toolchain can actually enforce. Record repository metadata identity and resolved RPM NEVRAs for each build, and retain metadata and package inputs where practical. Do not require a private full mirror before pipeline validation; document inputs that could not be retained and measure the limits of the mechanism.
+- **Alternatives:** Record only repository URLs and build time; establish and maintain a complete local mirror before the first build.
+- **Consequences:** Early builds can proceed without mirror infrastructure while producing useful provenance. Retention is not guaranteed until validated, and this prototype policy does not satisfy the production lockfile and provenance requirements in DEC-031 and DEC-026.
+
+### DEC-040: Prototype QEMU baseline values
+
+- **Status:** Accepted
+- **Date:** 2026-11-07
+- **Context:** DEC-038 requires one fixed QEMU machine profile, but the initial profile values were open. A modest, explicit developer profile is needed to make image validation comparable.
+- **Decision:** Define one fixed x86-64 developer profile with 4 vCPUs, 8 GiB RAM, a 40 GiB disk, UEFI firmware, standard virtual display hardware, and user-mode networking. Confirm the profile against Fedora 45 image requirements during pipeline validation and record exact QEMU device and firmware choices in the build instructions. Optional higher-resource settings may be documented separately and are not supported baseline profiles.
+- **Alternatives:** Copy Fedora's documented profile verbatim; establish separate minimum and recommended profiles before the first image.
+- **Consequences:** Reports can compare results using a concrete resource profile while preserving room for local experimentation. Exact device and firmware implementation details must be confirmed against Fedora 45 and documented before claiming the baseline validated.
+
+### DEC-041: Prototype reproducibility evidence
+
+- **Status:** Accepted
+- **Date:** 2026-11-07
+- **Context:** The production reproducibility bar in DEC-026 requires an independent matching rebuild, while the initial prototype pipeline and lockfile enforcement have not yet been validated.
+- **Decision:** For the initial prototype, require identified inputs: record the source and treefile revision, repository metadata identity, resolved RPM NEVRAs, package-signing key fingerprints, compose and Image Builder versions and configuration, OSTree checksum, and qcow2 digest. Retain inputs where practical and report any inputs or tool behavior that could not be pinned or repeated. Treat this as traceable prototype evidence, not a claim of reproducible output; reserve that claim for an independent rebuild with matching declared outputs.
+- **Alternatives:** Accept a repeatable written procedure without input records; require retained inputs and an independent matching rebuild before any prototype image can be evaluated.
+- **Consequences:** Pipeline work can start with auditable evidence and measured limits. Production release requirements remain those in DEC-026 and DEC-031, including enforced resolved-input pinning and an independent matching rebuild for a reproducibility claim.

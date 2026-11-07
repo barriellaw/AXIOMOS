@@ -10,6 +10,8 @@ The initial audience, first-release problem and scope, Fedora 45 Kinoite/KDE fou
 
 ## 1. Validate the custom image pipeline — current
 
+Follow the [prototype image-pipeline validation runbook](IMAGE_PIPELINE.md) and attach a dated build report with the gate evidence.
+
 - Validate Fedora 45 inputs and document the fixed baseline QEMU machine profile.
 - Validate the treefile composition, resolved-input pinning, and Image Builder OSTree-to-qcow2 path on the supported Fedora build host.
 - Boot the resulting image to the graphical desktop and record the exact build identity and any deviations from the target profile.

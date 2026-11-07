@@ -12,6 +12,7 @@ This repository currently contains project definition documents only. No impleme
 - [Product vision](docs/VISION.md) — intended audience experience and product goals.
 - [System outline](docs/SYSTEM.md) — a conceptual map of the OS and its major boundaries.
 - [Roadmap](docs/ROADMAP.md) — staged work from definition through a first bootable system.
+- [Prototype image-pipeline validation](docs/IMAGE_PIPELINE.md) — Stage 1 preflight, fixed QEMU baseline, and build evidence template.
 - [Application installation contract](docs/APP_INSTALLATION.md) — first-release Flatpak source, permission, and user-control expectations.
 - [Contribution guide](CONTRIBUTING.md) — how to propose changes and contribution licensing.
 - [LLM contribution guide](LLM_GUIDE.md) — instructions for AI tools working in this repository.

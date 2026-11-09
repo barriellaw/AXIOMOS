@@ -1,50 +1,19 @@
 # Open questions
 
-These are foundational decisions, not implied defaults. Resolve them with explicit rationale before they become implementation assumptions.
+Foundational product and architecture decisions are recorded in [Decision records](DECISIONS.md). The questions below are the remaining choices that affect the first build and validation gates. Resolve a question when its answer is needed; do not block early pipeline experiments on decisions reserved for production.
 
-## Suggested decision order
+## Before first-release workflow evaluation
 
-Answer these in sequence. Later choices depend on earlier ones, so keep implementation details open until the product scope is clear.
+5. **How will the prototype demonstrate the newcomer update and rollback flow?** Confirm the required user-visible steps and evidence for update explanation/approval, staging and reboot, rollback authorization, and recovery after a failed boot. The product outcome is accepted in DEC-003, DEC-009, and DEC-010; the target-session procedure and acceptance evidence remain to be specified.
+## Before production distribution
 
-1. **Audience and problem:** Choose who the first version serves and what need it addresses.
-2. **First useful release:** Define the smallest outcome that would make the project useful to that audience.
-3. **Initial target:** Choose a hardware or virtual machine target that can demonstrate that outcome.
-4. **System composition and delivery:** Select the base system and image approach that fit the target and the team's maintenance capacity.
-5. **Security and governance:** Set the minimum operating, update, support, and contribution expectations before implementation expands.
+7. **How are release keys operated and recovered?** Define custody, offline storage, backups, maintainer access, rotation, revocation, and client trust transition before production signing. See DEC-014 through DEC-016 and DEC-025.
+8. **What Secure Boot support and signing policy will Axiom offer?** Revisit this closer to public release, including supported firmware behavior, whether users enroll Axiom keys, key custody/rotation, and test coverage. Secure Boot is explicitly deferred from the initial prototype by DEC-036; OSTree update signing remains required by DEC-014.
+9. **What physical-install and encryption recovery flow is supported?** DEC-013 requires LUKS2 for a future physical-install image, but the installer, recovery-key handling, and supported opt-out need a separate design before that scope starts.
+10. **What are the final public name and release maintainers?** Confirm identity before production branding, and publish release-maintainer responsibilities before production images. See DEC-027 and DEC-032.
 
-The component-level choices below (such as bootloader and service manager) should follow from these decisions. This order is guidance, not a set of preselected answers.
+## Resolved
 
-## Product
-
-- Confirm whether **Axiom OS** is the lasting project name or only a codename.
-- Who is the initial audience: developers, general desktop users, servers, embedded devices, or another group?
-- What concrete problem or experience will distinguish Axiom OS from existing Linux distributions?
-- What is the smallest useful first release?
-
-## Platform and system composition
-
-- What initial hardware or virtual machine target should define the first bootable milestone?
-- Should the system start from an existing distribution or assemble a minimal system from upstream components?
-- Which bootloader, init/service manager, libc, and base user-space components best fit that target?
-- Which components are project-owned Rust software, and which should remain established upstream components?
-
-## Build and delivery
-
-- Which image formats and development environments need initial support?
-- How will dependencies and build inputs be pinned and audited?
-- Is the first artifact intended for virtual machines, physical installation, cloud images, containers, or another environment?
-
-## Security and operations
-
-- What threat model and privilege model should guide the base system?
-- How will updates be authenticated, applied, recovered, and rolled back?
-- What logging, remote access, and default network behavior are appropriate for the audience?
-- What support lifetime and security response process can the project maintain?
-
-## Governance
-
-- Who approves architecture and release decisions?
-- What license and contribution policy should apply?
-- What compatibility and stability guarantees should users be able to expect?
-
-When resolved, add entries to `docs/DECISIONS.md` with date, status, context, decision, alternatives, and consequences. Keep this file for questions that remain open.
+- Audience, problem, first useful release, QEMU architecture, Fedora 45 Kinoite/KDE foundation, image pipeline direction, update/rollback model, application source, security baseline, support window, and contribution license are recorded as accepted decisions in `DECISIONS.md`.
+- Secure Boot is deferred until closer to public release; the first QEMU demo is gated on boot and system update/rollback, while the full Flatpak contract remains required for first-release readiness; the QEMU validation approach uses one fixed baseline profile (DEC-036 through DEC-038).
+- Prototype input retention, QEMU baseline resources, and reproducibility evidence are recorded in DEC-039 through DEC-041. Validate the selected Fedora 45 tooling and exact virtual device choices during Stage 1; these decisions do not assert that pinning or output reproducibility has already been demonstrated.

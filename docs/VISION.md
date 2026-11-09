@@ -8,7 +8,7 @@
 
 Give people meaningful control over their computers without requiring them to understand every underlying technical detail. Axiom OS should pair approachable defaults and explanations with advanced controls in the same system, so users do not have to choose between ease of use and flexibility.
 
-The initial product direction is a desktop system for x86-64, with ARM64 as a possible later target. The first audience and smallest useful release remain open decisions.
+The initial audience is desktop newcomers, and the first-release problem is approachable system management with recoverable changes. The first useful release is a reproducible x86-64 VM desktop demonstrating system update and rollback. ARM64 remains a possible later target.
 
 ## Product goals
 
@@ -30,4 +30,4 @@ These are product goals, not claims of current functionality or promises of univ
 
 ## Technology candidates
 
-The source specification names technologies such as Btrfs, Flatpak, Wine, Proton, Wayland, and existing Linux desktop environments as preferences to evaluate. None is selected by this vision alone. Compare candidates against the chosen initial audience and target, then record significant selections in [Decision records](DECISIONS.md).
+The source specification names technologies such as Btrfs, Flatpak, Wine, Proton, and Wayland as preferences to evaluate. KDE Plasma on Fedora Kinoite is selected as the initial desktop environment in [Decision records](DECISIONS.md). Compare other candidates against the chosen audience and target before adopting them.

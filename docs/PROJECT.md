@@ -10,7 +10,7 @@ Define and build a maintainable desktop operating system based on the Linux kern
 
 Linux offers a mature kernel, broad hardware support, and a large ecosystem. Rust offers memory safety and strong tooling for systems software. Axiom OS explores how to combine those strengths into a focused, understandable OS rather than treating a kernel alone as a complete product.
 
-The initial product direction is a desktop OS that gives inexperienced users accessible system controls while retaining advanced control for experienced users. The specific first audience and distinguishing initial use case still need to be chosen; see [Open questions](OPEN_QUESTIONS.md).
+The initial audience is desktop newcomers. The product direction is to give them accessible system controls while retaining advanced control for experienced users. The initial problem and smallest useful release are recorded in [Decision records](DECISIONS.md): a reproducible x86-64 VM desktop demonstrating understandable system updates and rollback.
 
 ## Goals
 

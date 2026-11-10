@@ -21,6 +21,6 @@ This repository currently contains project definition documents only. No impleme
 
 ## Current status
 
-**Stage: decision baseline recorded; image-pipeline validation is next.** Fedora 45 Kinoite is the selected base for the initial prototype. There are no code, build, or boot artifacts yet. The next engineering milestone is to validate the custom image pipeline and produce a bootable x86-64 QEMU image. The current gate and remaining decisions are tracked in the [roadmap](docs/ROADMAP.md) and [open questions](docs/OPEN_QUESTIONS.md).
+**Stage: validate the custom image pipeline.** Fedora 45 Kinoite is the selected base for the initial prototype, and the Stage 1 runbook is prepared. The recorded workspace-host preflight is blocked before composition because that Ubuntu host lacks Fedora's compose and Image Builder tools; no Axiom image has been built or booted. The next engineering step is to run the Fedora 45 capability probes on the supported Fedora build host. See the [image-pipeline runbook](docs/IMAGE_PIPELINE.md), [preflight report](docs/validation/2026-11-07-host-preflight.md), [roadmap](docs/ROADMAP.md), and [open questions](docs/OPEN_QUESTIONS.md).
 
 Unless stated otherwise, original Axiom project content and project-owned code are licensed under [Apache-2.0](LICENSE). Third-party components retain their respective licenses.

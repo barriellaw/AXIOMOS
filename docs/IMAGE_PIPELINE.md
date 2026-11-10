@@ -72,6 +72,7 @@ After identifying the non-Secure-Boot UEFI code image and a matching writable va
 
 ```sh
 cp "$OVMF_VARS_TEMPLATE" /tmp/axiom-uefi-vars.fd
+qemu-img create -f qcow2 -F qcow2 -b "$AXIOM_IMAGE" /tmp/axiom-run.qcow2 40G
 qemu-system-x86_64 \
   -machine q35 \
   -cpu host \
@@ -79,13 +80,14 @@ qemu-system-x86_64 \
   -m 8192 \
   -drive if=pflash,format=raw,readonly=on,file="$OVMF_CODE" \
   -drive if=pflash,format=raw,file=/tmp/axiom-uefi-vars.fd \
-  -drive file=axiom.qcow2,format=qcow2,if=virtio \
+  -drive file=/tmp/axiom-run.qcow2,format=qcow2,if=virtio \
   -device virtio-vga \
   -netdev user,id=net0 \
-  -device virtio-net-pci,netdev=net0
+  -device virtio-net-pci,netdev=net0 \
+  -display gtk
 ```
 
-Replace `axiom.qcow2` with the built artifact path. Set `OVMF_CODE` to the UEFI firmware code file and `OVMF_VARS_TEMPLATE` to its matching, non-Secure-Boot variable-store template. Keep the exact expanded command in the report. This is a command template only; it has not been exercised with an Axiom image, and the exact QEMU machine version and Fedora firmware pairing remain to be confirmed on the supported build/validation host.
+Set `AXIOM_IMAGE` to the built qcow2 artifact, `OVMF_CODE` to the UEFI firmware code file, and `OVMF_VARS_TEMPLATE` to its matching, non-Secure-Boot variable-store template. The fresh qcow2 overlay gives the guest a 40 GiB virtual disk while preserving the built artifact; create a new overlay and variable store for each clean first-boot attempt. The QEMU GTK display frontend must be available on the validation host. Keep the exact expanded command and `qemu-img info` output for the overlay in the report. This is a command template only; it has not been exercised with an Axiom image, and the exact QEMU machine version and Fedora firmware pairing remain to be confirmed on the supported build/validation host.
 
 ## Boot acceptance evidence
 
@@ -115,6 +117,7 @@ Compose and Image Builder versions/configuration:
 Build commands and exit status:
 OSTree checksum:
 qcow2 filename, size, SHA-256:
+Runtime overlay filename, backing image, virtual size:
 QEMU version and exact launch command:
 UEFI firmware identity:
 Baseline deviations:

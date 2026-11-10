@@ -5,6 +5,11 @@ Foundational product and architecture decisions are recorded in [Decision record
 ## Before first-release workflow evaluation
 
 5. **How will the prototype demonstrate the newcomer update and rollback flow?** Confirm the required user-visible steps and evidence for update explanation/approval, staging and reboot, rollback authorization, and recovery after a failed boot. The product outcome is accepted in DEC-003, DEC-009, and DEC-010; the target-session procedure and acceptance evidence remain to be specified.
+
+## Before default app packaging
+
+6. **Which ArtCraft component and delivery paths will be included for the default apps?** DEC-042 selects Brave Browser and ArtCraft and requires each default app to be individually removable through a documented graphical path. Identify the intended ArtCraft component (launcher, a selected Craft app, or ArtCraft Studio), and validate sources, update behavior, and uninstall behavior for both apps. Brave's [Linux guidance](https://brave.com/linux/) says its Flathub build has limitations and recommends native packages when available; ArtCraft's [site](https://getartcraft.com/) offers a launcher that installs its Craft apps, individual app installers, and ArtCraft Studio. Resolve this before packaging; it does not block the current image-pipeline validation gate.
+
 ## Before production distribution
 
 7. **How are release keys operated and recovered?** Define custody, offline storage, backups, maintainer access, rotation, revocation, and client trust transition before production signing. See DEC-014 through DEC-016 and DEC-025.

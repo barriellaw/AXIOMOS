@@ -4,6 +4,19 @@ This contract applies to the first Axiom desktop release based on Fedora Kinoite
 
 Per [DEC-037](DECISIONS.md#dec-037-flatpak-acceptance-gate), this full contract is required for first-release readiness but does not block the initial boot and system update/rollback workflow demo.
 
+## Default applications
+
+The selected first-release default apps are:
+
+| App | Reference | Status |
+|---|---|---|
+| Brave Browser | [Brave for Linux](https://brave.com/linux/) | Selected; delivery and supported uninstall path need validation. |
+| ArtCraft | [getartcraft.com](https://getartcraft.com/) | Selected by product name/site; the specific ArtCraft component to include needs clarification before packaging. |
+
+Users must be able to uninstall each default app individually through a documented graphical path. Removing a default app must not remove unrelated apps or core desktop/system components. Explain whether app settings or user data remain after uninstall. These are product requirements, not claims that either app is currently included.
+
+The package source and update mechanism for these defaults must be resolved without silently enabling another application source or putting routine app management behind administrator-only package layering. Brave's own Linux guidance identifies its Flathub package as less functional than its native packages and recommends its official repository package where available; ArtCraft's site offers a launcher for its Craft apps and separate app installers, as well as ArtCraft Studio. See [DEC-042](DECISIONS.md#dec-042-default-applications-and-removability) and [Open question 6](OPEN_QUESTIONS.md#before-default-app-packaging).
+
 ## Supported path
 
 - Use KDE Discover with its Flatpak backend as the supported graphical path for installing, updating, and removing desktop applications.
@@ -34,5 +47,6 @@ The application-installation path is ready for release when all of the following
 4. Axiom does not silently broaden Flatpak permissions. User-mediated portals are used where the application and desktop support them.
 5. A user can update and remove an installed Flatpak through Discover and can inspect or change its permissions using the documented tool.
 6. Help text clearly distinguishes application changes from system deployments and states what OS rollback will not restore.
+7. Brave Browser and the selected ArtCraft component are available by default and can each be uninstalled individually through the documented graphical path.
 
 DEC-022 proposes KDE's Flatpak permissions page in System Settings as the supported management tool; it remains pending acceptance and target-session validation. Any Axiom-authored permission explanation UI also remains to be designed; see [Open questions](OPEN_QUESTIONS.md).

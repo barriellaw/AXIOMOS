@@ -13,7 +13,7 @@ Axiom OS should track upstream Linux unless a documented requirement justifies a
 1. **Firmware and boot** — the initial target is a QEMU x86-64 virtual machine using Fedora Kinoite's UEFI/GPT boot profile; Secure Boot signing and key ownership, kernel, and early userspace details remain open.
 2. **Base system** — essential files, libraries, device management, networking, identity, logging, and service management. Component choices are undecided.
 3. **Rust system software** — project-authored services, administrative tools, and system utilities, selected based on clear requirements and suitable Rust ecosystem support.
-4. **User-facing environment** — KDE Plasma on Fedora Kinoite is the selected initial desktop environment. The first-release app path is Discover with Flatpak from the full Flathub remote; package layering stays outside the newcomer workflow. See the [application installation contract](APP_INSTALLATION.md).
+4. **User-facing environment** — KDE Plasma on Fedora Kinoite is the selected initial desktop environment. The first-release app path is Discover with Flatpak from the full Flathub remote; package layering stays outside the newcomer workflow. Brave Browser and ArtCraft are selected default apps, and each must be individually removable. Their exact delivery paths remain to be validated. See the [application installation contract](APP_INSTALLATION.md).
 5. **Build, delivery, and maintenance** — the initial artifact is a QEMU image based on Fedora 45 Kinoite, built through the accepted treefile → OSTree commit → Image Builder pipeline; the release-specific build and reproducibility behavior, physical installation, and production release process remain open.
 
 ## Language policy

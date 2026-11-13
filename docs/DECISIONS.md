@@ -492,3 +492,163 @@ See [Open questions](OPEN_QUESTIONS.md) for the remaining decision backlog.
 - **Decision:** Permit exactly one additional default Flatpak remote — ArtCraft's OCI remote at `https://getartcraft.com/artcraft-oci.flatpakrepo` — for the purpose of delivering the selected ArtCraft component. Enable no other additional remote by default. The rest of DEC-020 applies to both remotes: show the application's source before installation, explain declared permissions in plain language, and never present publisher verification as a safety certification. Because this remote is vendor-operated rather than a broad catalog, the interface must make clear which remote supplies an application.
 - **Alternatives:** Keep DEC-020 unchanged and drop ArtCraft from the defaults; keep DEC-020 unchanged and deliver ArtCraft from its RPM channel, which DEC-031 forbids; permit additional remotes in general rather than naming this one.
 - **Consequences:** Axiom carries two default application sources, so the application contract must state which remote supplies each default, and users need an accessible way to tell them apart. The ArtCraft remote's verification properties are not established — its documentation describes SHA-256 checksums over files streamed from GitHub Releases and names no signing key — so DEC-012's treatment of third-party applications as untrusted applies with particular force here, and the remote's integrity behavior must be validated before release. Permitting one named remote rather than remotes in general keeps the boundary reviewable: adding a third source requires another decision.
+
+### DEC-051: Documentation consistency checks
+
+- **Status:** Proposed
+- **Date:** 2026-11-12
+- **Context:** This repository's rules are enforced only by attention.
+  [DEC-047](#dec-047-verification-strategy-and-evidence-retention)
+  defines three classes of check — composition, boot and interaction — but all three verify
+  the *product*, and none covers the documentation that specifies it. Meanwhile the corpus
+  depends on machine-checkable invariants: every requirement cites a `DEC-nnn` ID, decisions
+  are linked by `#dec-nnn-slug` anchors, open questions are cited by stable number, and the
+  README's status must not outrun `docs/validation/`. A renamed heading silently breaks every
+  anchor pointing at it, and a cited ID that does not exist reads exactly like one that does.
+  Nothing currently detects either.
+- **Decision:** Define a fourth class of check — **documentation checks** — alongside the
+  three in DEC-047, and require it to run over tracked Markdown before a commit lands. The
+  class comprises: every relative link resolves; **every `#dec-nnn-slug` fragment resolves to
+  a heading that exists**; every cited `DEC-nnn` names a record present in `DECISIONS.md`; no
+  document asserts a decision status that contradicts `DECISIONS.md`; and prose spelling.
+
+  Implement with `lychee` for links, **configured with fragment checking enabled**, because
+  the default skips fragments and anchors are this project's main link risk; `typos` for
+  prose, with a project wordlist for the domain vocabulary (`rpm-ostree`, `ostree`, Kinoite,
+  treefile, qcow2, polkit, zbus, Flatpak, Flathub); and a small ID-and-status cross-check for
+  the two invariants no off-the-shelf tool knows about. Run them from a `pre-commit`
+  configuration so they execute locally, since there is no CI.
+
+  Unlike DEC-047's classes, a documentation check verifies **internal consistency only**. It
+  never establishes that anything builds, boots or works; that still requires a dated report
+  in `docs/validation/`, and a green documentation check must never be cited as evidence.
+- **Alternatives:** Keep the checks manual, as the conventions already ask — which is the
+  present state, and the stale cross-references found during consistency passes are the
+  argument against it. Defer until implementation begins, which leaves the specification
+  layer unchecked during the period it is being written and most heavily edited. Run the
+  checks in GitHub Actions instead, which needs a `.github/` workflow that does not exist and
+  would catch errors after a push rather than before a commit. Adopt link checking only and
+  skip spelling, which would have caught neither of the repeated misspellings in the existing
+  commit log.
+- **Consequences:** The invariants the conventions already require become enforced rather
+  than aspirational, and a contributor learns about a broken anchor before the commit instead
+  of from a future reader. This introduces four files the documentation-only gate currently
+  forbids — a `pre-commit` configuration, a `lychee` configuration, a `typos` configuration,
+  and one check script — so **none is created unless and until this record is Accepted**; the
+  gate does not lift for anything else. It also adds local tool prerequisites, so the checks
+  must degrade to a clear skip rather than a failure when a tool is absent. The wordlist is a
+  maintenance surface: a legitimate new term is a one-line addition, but an unmaintained list
+  trains contributors to bypass the check.
+
+### DEC-052: Text line-ending normalization
+
+- **Status:** Proposed
+- **Date:** 2026-11-12
+- **Context:** The working copy lives on a drive shared with a dual-boot Windows
+  installation. A Windows-side editor, or a clone made with `core.autocrlf=true`, rewrites
+  text files to CRLF; from Linux the entire tree then reports as modified, and a real change
+  becomes impossible to find in the diff. The repository has no `.gitattributes`, so line
+  endings depend on each machine's local git configuration.
+- **Decision:** Add a `.gitattributes` at the repository root declaring `* text=auto eol=lf`,
+  so text files are stored and checked out with LF regardless of the client platform. Mark
+  any committed binary container explicitly as `binary` when one is first added, because a
+  normalizer that rewrites bytes inside an archive corrupts it while git reports an ordinary
+  checkout.
+
+  **This is prevention, not a repair.** Measured 2026-11-12: `git ls-files --eol` reports
+  `i/lf w/lf` for all 15 tracked files, and no tracked file contains CRLF. This record
+  changes nothing about the current tree; it fixes the behavior for the next clone or
+  Windows-side edit.
+- **Alternatives:** Rely on each contributor setting `core.autocrlf=input` locally, which is
+  per-machine configuration that no clone inherits and that silently does not apply to a
+  contributor who has not set it. Do nothing, accepting that a Windows-side edit produces a
+  whole-tree diff. Add the file only after the problem occurs, which means recovering a
+  polluted diff first.
+- **Consequences:** A one-line file makes line endings a property of the repository rather
+  than of each machine. `.gitattributes` is a configuration file, so it is **not created
+  unless this record is Accepted**. Normalization is applied as files are next staged, so
+  accepting this later rather than sooner is harmless given no CRLF exists today. A future
+  binary file added without its `binary` attribute would be corrupted by the wildcard rule,
+  which is why the attribute is required at the time such a file is first committed.
+
+### DEC-053: Tracked agent rule and skill layout
+
+- **Status:** Proposed
+- **Date:** 2026-11-12
+- **Context:** [DEC-043](#dec-043-repository-layout-for-implementation-artifacts) reserves
+  paths for implementation artifacts but says nothing about where instructions to automated
+  contributors live. Those instructions are currently one file, `LLM_GUIDE.md`, reached
+  through `CLAUDE.md` and `AGENTS.md`. One file is adequate at its present size, and the
+  documentation conventions require a recorded reason before any new directory is added, so
+  the question is whether a structured layer earns its place now or later.
+- **Decision:** Reserve `.claude/rules/` for path-scoped rule files and `.claude/skills/`
+  for repeatable procedures, tracked in version control so a clone carries the rules binding
+  it. A rule file declares the paths it governs and is loaded when a matching file is opened,
+  which puts the relevant rule in front of a contributor at the moment of editing rather than
+  relying on it having been read at the start. A skill is a named procedure with its steps and
+  its failure modes; the two worth having first are **filing a validation report** and
+  **drafting a decision record**, because both are frequent, both have an exact shape, and
+  both are currently reconstructed from prose each time.
+
+  `LLM_GUIDE.md` remains the canonical guide and the single source of each rule. A rule file
+  restates the rule for one path and cites the guide; it never holds a rule the guide does
+  not, because two copies of a rule become two different rules.
+- **Alternatives:** Keep everything in `LLM_GUIDE.md`, which stays correct and is the reason
+  this is proposed rather than assumed — the guide is currently short enough to read in full.
+  Keep `.claude/` untracked and local, which means each clone and each worktree has different
+  rules and none travels with a contribution. Add the directories but leave them empty until
+  a need appears, which reserves the paths without demonstrating the value.
+- **Consequences:** Rules arrive when they are relevant rather than only at session start,
+  and two error-prone procedures gain a checkable shape. Against that: a second location for
+  guidance is a drift risk, which the single-source rule above is meant to contain but does
+  not enforce; and `.claude/` is harness-specific, so `AGENTS.md` must keep pointing other
+  tooling at `LLM_GUIDE.md` or non-Claude contributors silently lose the layer. The
+  directories and files are **not created unless this record is Accepted**. If
+  [DEC-051](#dec-051-documentation-consistency-checks) is also accepted, its checks should
+  cover these files, since a rule file that cites a renamed heading fails as silently as any
+  other stale pointer.
+
+### DEC-054: Branch roles and the merge gate
+
+- **Status:** Proposed
+- **Date:** 2026-11-12
+- **Context:** Three branches exist and no document says what any of them is for. Measured
+  2026-11-12 against `dev`:
+
+  | Ref | Tip | Date | Relative to `dev` |
+  |---|---|---|---|
+  | `dev` (current) | `52f2aff` | 2026-11-10 | — |
+  | `origin/dev` | `52f2aff` | 2026-11-10 | in sync |
+  | `main` | `48e0be2` | 2026-11-03 | 10 behind, 0 ahead |
+  | `origin/main` | `b5288d2` | 2026-11-03 | 12 behind, 0 ahead |
+  | `testing` / `origin/testing` | `7ef2375` | 2026-11-09 | 4 behind, 2 ahead |
+
+  Two facts need deciding rather than describing. The published `main` is twelve commits
+  behind the working line, so a reader arriving at the repository's default branch sees a
+  state the project abandoned a week ago. And `testing` holds two commits absent from `dev` —
+  `7ef2375` and `539160f` — whose subjects duplicate commits already on `dev` under different
+  hashes, so it reads as an abandoned parallel line rather than a purposeful branch.
+- **Decision:** Treat `dev` as the integration branch where work lands, and `main` as the
+  reviewed, published state, updated from `dev` when a documentation milestone is coherent —
+  at minimum whenever the README's "Current status" would change for a reader. Before `dev`
+  merges to `main`, require that no document contradicts `DECISIONS.md`, that no record was
+  left in a status an agent set, and that the README's status matches the newest report in
+  `docs/validation/`; if [DEC-051](#dec-051-documentation-consistency-checks) is accepted, its
+  checks are the mechanical part of that gate.
+
+  **`testing` is left undecided deliberately.** It carries two commits `dev` does not, so it
+  cannot be called unused, and nothing in the repository records what it was for. The owner
+  should merge it, retire it after confirming those two commits are redundant, or assign it a
+  role here. Inventing one would be exactly the silent requirement the contribution guide
+  forbids.
+- **Alternatives:** Work on `main` alone and delete the others, which the twelve-commit
+  divergence shows is not what is happening in practice. Adopt a three-tier model with a
+  soak branch between `dev` and `main`, which gates nothing in a repository with no build
+  and no deployment. Leave the model undocumented, which is the present state and the reason
+  a reader cannot tell which branch to trust.
+- **Consequences:** A reader learns which branch is current, and `main` stops being a stale
+  default. The merge gate is manual until DEC-051 provides the mechanical half, so it depends
+  on being run rather than on being enforced. Updating `main` is an explicit step someone has
+  to take, so the gap will reappear if it is not taken. Recording `testing` as undecided
+  leaves a visible loose end, which is the intent: it is a question for the owner, not a
+  branch an agent should quietly delete.

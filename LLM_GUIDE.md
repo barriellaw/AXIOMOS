@@ -15,6 +15,33 @@ product and architecture specification.
 - Product goals in `docs/VISION.md` are aspirations, not claims that features already
   exist or guarantees of universal compatibility.
 
+## Tripwires — break one and nothing goes red
+
+Every rule in this repository fails silently. There is no build to break and no test to
+turn red: a false claim, a renumbered ID or an unindexed document reads exactly like
+correct work. The detail lives in the rule each line names; these are the one-liners.
+
+- **Never write that an image boots, a feature works, or a milestone is complete** unless a
+  dated report in `docs/validation/` shows it. → *Validation reports* below, and the
+  **Evidence language** section of `docs/DOC_CONVENTIONS.md`.
+- **Never cite a Proposed decision as settled, and never implement from one.** Read the
+  record's `Status:` line before relying on it; do not assume a high ID means Proposed or a
+  low one means Accepted. → *Citing a Proposed decision* below.
+- **Never set `Status: Accepted` and never move a question to Resolved.** You may propose;
+  only the owner accepts (DEC-032). → *What you may decide, and what you must escalate*.
+- **Never rewrite an accepted record** when the decision itself changes. Add a superseding
+  record instead. → *Changing an accepted record* below.
+- **Never reuse, renumber or delete a DEC ID or an open-question number.** Other documents
+  cite them and nothing checks those citations. → *Decision records* below, and
+  `docs/OPEN_QUESTIONS.md`.
+- **The README's "Current status" must never claim more than the newest validation report
+  supports**, and an index must be updated in the same commit as the thing it points at.
+  → **Keeping the README current** in `docs/DOC_CONVENTIONS.md`.
+- **A document no index references will not be read.** Adding one means adding it to the
+  README index and to the reading order below. → **Keeping the README current**.
+- **Do not create an implementation, configuration, or build file** — that includes a
+  linter config or a git hook, however small. → *The documentation-only gate* below.
+
 ## Reading order
 
 `docs/DECISIONS.md` is the authoritative rule source. Where any other document disagrees
@@ -104,6 +131,18 @@ Status values and the only permitted transitions:
 **Citing a Proposed decision:** only inside a section explicitly marked provisional, and
 never as a settled requirement. **Do not implement from a Proposed decision.** If your
 task depends on one, stop and say what is blocked.
+
+**Recording a decision after the fact:** if the choice was already made and acted on before
+anyone wrote it down, say so in the record rather than presenting it as contemporaneous. Open
+with a short provenance note — `> **Note on provenance.** This record was written after the
+decision was made …` — and mark any rationale you reconstructed rather than took from a
+source with *(inference)*. A reader can then tell a recorded decision from a reasonable
+guess about why something was done.
+
+**An amendment that corrects something stated earlier in the same record:** say which part
+to read first. A reader who meets the superseded figure before the correction will use the
+wrong one, and the amendment note alone does not prevent that — for example, "Read the
+2026-11-12 amendment before the Decision paragraph, whose counts it corrects."
 
 ## Validation reports
 

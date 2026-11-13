@@ -43,7 +43,7 @@ This repository currently contains project definition documents only. No impleme
 
 **No Axiom image has been built or booted.** The recorded workspace-host preflight is blocked before composition because that Ubuntu host lacks Fedora's compose and Image Builder tools. The next engineering step is to run the Fedora 45 capability probes on a supported Fedora build host.
 
-The documentation needed to do that is in place: repository layout, the OSTree remote and version scheme, build identity, the Rust toolchain baseline, verification strategy, default-application delivery, and treefile derivation are recorded as accepted decisions (DEC-043 through DEC-050), and the build-host, repository-layout, and treefile specifications are written.
+The documentation needed to do that is in place: repository layout, the OSTree remote and version scheme, build identity, the Rust toolchain baseline, verification strategy, default-application delivery, and treefile derivation are recorded as accepted decisions (DEC-043 through DEC-050), and the build-host, repository-layout, and treefile specifications are written. Four further records covering repository process rather than the system itself — documentation consistency checks, text line-ending normalization, an agent rule and skill layout, and branch roles (DEC-051 through DEC-054) — are Proposed and awaiting review; they are not rules yet, and nothing they describe has been created.
 
 See the [build host setup](docs/BUILD_HOST.md), [treefile specification](docs/TREEFILE_SPEC.md), [image-pipeline runbook](docs/IMAGE_PIPELINE.md), [preflight report](docs/validation/2026-11-07-host-preflight.md), [requirements](docs/REQUIREMENTS.md), [roadmap](docs/ROADMAP.md), and [open questions](docs/OPEN_QUESTIONS.md).
 

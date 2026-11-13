@@ -652,3 +652,65 @@ See [Open questions](OPEN_QUESTIONS.md) for the remaining decision backlog.
   to take, so the gap will reappear if it is not taken. Recording `testing` as undecided
   leaves a visible loose end, which is the intent: it is a question for the owner, not a
   branch an agent should quietly delete.
+
+### DEC-055: Content of the plain-language update summary
+
+- **Status:** Proposed
+- **Date:** 2026-11-12
+- **Context:** [DEC-009](#dec-009-system-update-and-rollback-experience) requires Axiom to
+  present "a plain-language update summary" and ask before staging, but does not say what the
+  summary contains. The audience is desktop newcomers
+  ([DEC-001](#dec-001-initial-audience)), so the obvious technical source — rpm-ostree's
+  package diff between deployments — is unreadable as a primary summary: a base-system update
+  can change hundreds of packages, and a NEVRA list answers no question a newcomer is asking.
+  The acceptance procedure in
+  [`UPDATE_ROLLBACK_SPEC.md`](UPDATE_ROLLBACK_SPEC.md#a--the-update-is-explained-before-anything-changes)
+  cannot fully check step A until this is settled, because "a summary was shown" is checkable
+  while "the summary explained the update" is not.
+- **Decision:** Require the summary, before anything is staged, to state:
+  1. **That nothing changes until reboot**, and that the running system is unaffected until
+     then. This is the fact most likely to be misread, because every other update model the
+     audience has met applies immediately.
+  2. **The version it is moving from and to**, using the release version scheme in
+     [DEC-044](#dec-044-ostree-remote-ref-and-version-scheme).
+  3. **Whether the update contains security fixes**, when that is known from the build
+     inputs. [DEC-012](#dec-012-initial-security-threat-model) requires rollback warnings for
+     security fixes, which is only possible if the update's security status is surfaced here
+     first.
+  4. **A short description of what changed at system level**, not per package.
+  5. **That it can be undone, and what undo does not restore** — the system deployment only,
+     never user files, and not necessarily application data
+     ([DEC-009](#dec-009-system-update-and-rollback-experience),
+     [DEC-018](#dec-018-end-of-support-migration-notice)).
+
+  Keep the full package-level difference available but **not shown by default**, so the
+  advanced control `VISION.md` promises is retained without making it the newcomer's first
+  encounter with an update.
+
+  The summary must not present a raw package list as the primary explanation, must not claim
+  an update is risk-free, and must not fabricate a description when none is available — see
+  the consequences below.
+- **Alternatives:** Show rpm-ostree's package diff directly, which is accurate, free, and
+  unreadable for the audience. Show only the version numbers, which is honest but explains
+  nothing and makes the approval meaningless. Defer the content until the interface is
+  designed, which inverts the dependency: the interface cannot be designed against an
+  unspecified summary, and step A of the acceptance procedure would stay uncheckable.
+- **Consequences:** Points 2 and 5 are available from the deployment and the decisions
+  already made. Points 3 and 4 are obligations on release engineering, not on the interface:
+  - **Point 4 requires per-release notes to exist.** That is a new release-engineering
+    deliverable, tied to the version scheme in DEC-044 and the support dates in
+    [DEC-017](#dec-017-support-window-follows-fedora-base-support). If notes are absent the
+    summary degrades to points 1, 2, 3 and 5, and the interface must say nothing about what
+    changed rather than inventing a description.
+  - **Point 3 may not be mechanically available.** Fedora's package metadata carries advisory
+    and security information, but an Axiom release is delivered as an OSTree commit composed
+    from those packages, and whether that metadata survives composition in a form the client
+    can read **is unvalidated**. If it does not, either the pipeline must carry the security
+    status forward as release metadata of its own, or the summary must omit point 3 rather
+    than assert that an update contains no security fixes. Asserting the absence of security
+    fixes without evidence would be the more harmful failure, because a user may reasonably
+    defer an update described as routine.
+
+  This record specifies content, not presentation. Wording, layout and visual design remain
+  deferred until a target session can be observed, per
+  [`UPDATE_ROLLBACK_SPEC.md`](UPDATE_ROLLBACK_SPEC.md#scope).

@@ -24,6 +24,32 @@ not records of having done it.
 | **Blocked** | Needs a Proposed decision approved first. Do not guess. |
 | **Deferred** | Deliberately out of scope until production or a later stage. |
 
+## Owner documents
+
+The **Owner doc** column uses short names. They resolve as follows; a name with no file yet
+is a document this project still owes.
+
+| Short name | File |
+|---|---|
+| Repo layout | [`REPO_LAYOUT.md`](REPO_LAYOUT.md) |
+| Build host | [`BUILD_HOST.md`](BUILD_HOST.md) |
+| Treefile spec | [`TREEFILE_SPEC.md`](TREEFILE_SPEC.md) |
+| Image pipeline | [`IMAGE_PIPELINE.md`](IMAGE_PIPELINE.md) |
+| Update/rollback spec | [`UPDATE_ROLLBACK_SPEC.md`](UPDATE_ROLLBACK_SPEC.md) |
+| Rust components | [`RUST_COMPONENTS.md`](RUST_COMPONENTS.md) |
+| Testing spec | [`TESTING.md`](TESTING.md) |
+| App installation | [`APP_INSTALLATION.md`](APP_INSTALLATION.md) |
+| Doc conventions | [`DOC_CONVENTIONS.md`](DOC_CONVENTIONS.md) |
+| LLM guide | [`LLM_GUIDE.md`](../LLM_GUIDE.md) |
+| Vision | [`VISION.md`](VISION.md) |
+| Roadmap | [`ROADMAP.md`](ROADMAP.md) |
+| Contributing | [`CONTRIBUTING.md`](../CONTRIBUTING.md) |
+| This file | this document |
+| Build spec | **not yet written** — build procedure detail beyond `IMAGE_PIPELINE.md` |
+| Compatibility note | **not yet written** — required by DEC-034 |
+| Production stub | **not yet written** — production-deferred items |
+| Per-component specs, All specs, All user-facing docs | review obligations spanning documents, not one file |
+
 ## Build pipeline and inputs
 
 | ID | Requirement | DEC | Owner doc | Verify | State |
@@ -71,6 +97,7 @@ not records of having done it.
 | DEC-010b | The UI stays unprivileged: no setuid helper, no custom root daemon, no broadened polkit rule | DEC-010 | Rust components | Inspect shipped polkit rules and binaries | Open |
 | DEC-010c | Fedora's boundary is preserved: updates for active local users; passwordless rollback only for active local `wheel` administrators | DEC-010 | Update/rollback spec | Test as non-admin and as admin | Open |
 | DEC-010d | The UI handles authorization denial, authentication prompts, missing desktop agents, and operation failures | DEC-010 | Update/rollback spec | Each failure state exercised | Open |
+| DEC-055a | **Proposed requirement.** The update summary states that nothing changes until reboot, the versions moved between, whether security fixes are included, what changed at system level, and what undo does not restore | DEC-055 (**Proposed**) | Update/rollback spec | Read the summary in the target session against the five required points | Blocked |
 | DEC-009g | Rollback is described as restoring the system deployment only — never user files, and not necessarily application data | DEC-009, DEC-018 | Update/rollback spec | Help text states the limit | Open |
 
 ## Applications
@@ -179,15 +206,18 @@ The choices discovered by this mapping were drafted as proposals and accepted on
 
 | Needed for | What must be decided | Where |
 |---|---|---|
-| DEC-009d | What the plain-language update summary must contain | within the update/rollback spec, pending approval |
+| DEC-009d | What the plain-language update summary must contain | DEC-055 (**Proposed**) — drafted 2026-11-12, awaiting owner approval |
 | — | DEC-007's status reads `Superseded` but its text says the proposal was declined; under the status vocabulary that is `Rejected` | status relabel, owner action |
 
 ## Coverage
 
-All 50 decision records (DEC-001 … DEC-050) are accounted for above, except DEC-007,
+All 55 decision records (DEC-001 … DEC-055) are accounted for above, except DEC-007,
 which is superseded and carries no active requirement — it appears in
 [New choices required](#new-choices-required) for its status relabel. DEC-020 is
 superseded in part by DEC-050; both appear, and the rows cite whichever now governs.
+DEC-051 through DEC-055 are **Proposed**, so they carry no binding requirement yet: DEC-055
+appears as a Blocked row above, and DEC-051 through DEC-054 govern documentation process and
+repository mechanics rather than the product.
 Decisions that are purely directional (DEC-001, DEC-002, DEC-005, DEC-012, DEC-027)
 appear as review obligations rather than testable artifacts, which is the honest mapping:
 they constrain judgment rather than producing a checkable output.

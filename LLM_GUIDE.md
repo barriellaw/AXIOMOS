@@ -57,7 +57,18 @@ with it, DECISIONS.md wins and the other document is a defect you should report 
 6. **`docs/OPEN_QUESTIONS.md`** — what is deliberately still undecided.
 7. **`docs/DOC_CONVENTIONS.md`** — how to write and file whatever you produce.
 
-Then read the specification document covering your task.
+Then read the specification covering your task:
+
+| Task | Specification |
+|---|---|
+| Setting up a build host | `docs/BUILD_HOST.md` |
+| Writing or changing the treefile | `docs/TREEFILE_SPEC.md` |
+| Where a file belongs | `docs/REPO_LAYOUT.md` |
+| Building or booting an image | `docs/IMAGE_PIPELINE.md` |
+| The update and rollback workflow | `docs/UPDATE_ROLLBACK_SPEC.md` |
+| Application installation and defaults | `docs/APP_INSTALLATION.md` |
+| Writing a check, or claiming a gate | `docs/TESTING.md` |
+| Writing an Axiom-owned component | `docs/RUST_COMPONENTS.md` |
 
 ## How to work here
 

@@ -24,7 +24,7 @@ Stop and record a blocker if the selected Fedora 45 tooling cannot compose the t
 
 ### Release-specific interface probe
 
-The upstream interfaces are documented separately: [`rpm-ostree compose tree`](https://coreos.github.io/rpm-ostree/compose-server/) accepts a treefile and creates an OSTree commit; [Image Builder's OSTree workflow](https://osbuild.org/docs/developer-guide/projects/image-builder/usage/) accepts an OSTree URL and ref for OSTree-based image types. However, the published [Kinoite qcow2 image description](https://osbuild.org/docs/user-guide/image-descriptions/fedora-43/kinoite-qcow2/) located during planning is Fedora 43, and does not establish the Fedora 45 CLI or image-type availability. Treat the connection between the two tools on Fedora 45 as an open validation item.
+The upstream interfaces are documented separately: [`rpm-ostree compose tree`](https://coreos.github.io/rpm-ostree/compose-server/) accepts a treefile and creates an OSTree commit; [Image Builder's OSTree workflow](https://osbuild.org/docs/developer-guide/projects/image-builder/usage/) accepts an OSTree URL and ref for OSTree-based image types. However, the published Kinoite qcow2 image descriptions located during planning are for earlier releases ([Fedora 43](https://osbuild.org/docs/user-guide/image-descriptions/fedora-43/kinoite-qcow2/) and [Fedora 44](https://osbuild.org/docs/user-guide/image-descriptions/fedora-44/kinoite-qcow2/); the Fedora 44 path is the one cited in `FOUNDATION_RESEARCH.md` and DEC-030). Neither establishes the Fedora 45 CLI or image-type availability. Treat the connection between the two tools on Fedora 45 as an open validation item.
 
 On the supported build host, capture these read-only capability probes before writing a build command:
 

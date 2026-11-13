@@ -6,7 +6,7 @@ Record consequential choices here so maintainers and automated contributors can 
 
 ### DEC-000: Short title
 
-- **Status:** Proposed / Accepted / Superseded
+- **Status:** Proposed / Accepted / Rejected / Superseded
 - **Date:** YYYY-MM-DD
 - **Context:** What question needs a decision and why?
 - **Decision:** What was chosen?
@@ -77,6 +77,7 @@ See [Open questions](OPEN_QUESTIONS.md) for the remaining decision backlog.
 - **Decision:** The proposal to use a Fedora preview image before settling Axiom's custom image pipeline was declined. Define the reproducible custom image pipeline before workflow evaluation.
 - **Alternatives:** Use Fedora's Kinoite QEMU disk image as a temporary evaluation base, while leaving Axiom's first-release artifact decision open.
 - **Consequences:** A reproducible custom image pipeline must be validated before VM workflow evaluation. The preview image may still inform research, but it is not the next validation artifact.
+- **Status note (2026-11-12, pending owner review):** This record's status reads `Superseded`, but its decision text says the proposal "was declined" and no later record replaces it. Under the status vocabulary in [Glossary](GLOSSARY.md#status-vocabulary) that is `Rejected`. Flagged for owner relabel; not changed here, because a status change is substantive rather than clerical.
 
 ### DEC-008: Custom Kinoite image pipeline
 
@@ -188,8 +189,9 @@ See [Open questions](OPEN_QUESTIONS.md) for the remaining decision backlog.
 
 ### DEC-020: Default Flatpak application source
 
-- **Status:** Accepted
+- **Status:** Accepted (superseded in part by [DEC-050](#dec-050-permit-the-artcraft-oci-remote-as-a-second-default-application-source))
 - **Date:** 2026-11-03
+- **Superseded in part (2026-11-12):** the clause "Do not enable additional Flatpak remotes by default in the first release" is replaced by DEC-050, which permits one named additional remote. Every other part of this record stands.
 - **Context:** DEC-019 selects Discover and Flatpak for desktop application installs, but the source needs a clear default. Flathub is Flatpak's primary publishing and hosting service. Its full catalog offers broad availability; its verified subset limits installs to apps whose publisher has confirmed ownership of the app ID. Verification establishes publisher identity, not an Axiom security review or a guarantee that an app is safe. KDE Discover supports a Flatpak backend. Flathub documents verified-badge display on Flathub's site and GNOME Software, so Axiom should not assume that Discover exposes this status. See [Flatpak repositories](https://docs.flatpak.org/en/latest/repositories.html), [Flathub verification](https://docs.flathub.org/docs/for-users/verification), and [Flathub safety overview](https://docs.flathub.org/blog/app-safety-layered-approach-source-to-user).
 - **Decision:** Enable the full Flathub remote by default in Discover to provide a broad application catalog. Do not describe Flathub verification as a safety certification. Explain the app's source and requested permissions before installation, and provide a link to the Flathub listing so users can check publisher verification where available. Do not enable additional Flatpak remotes by default in the first release.
 - **Alternatives:** Enable only Flathub's verified subset by default and require an explicit step to access the full catalog; enable Fedora and Flathub remotes together; defer a default remote until app installation is implemented.
@@ -346,7 +348,8 @@ See [Open questions](OPEN_QUESTIONS.md) for the remaining decision backlog.
 - **Context:** The first useful release includes a newcomer-facing system update and rollback workflow, while the application-installation contract contains additional Flatpak source, permission, and application-management requirements.
 - **Decision:** Keep the full `APP_INSTALLATION.md` acceptance contract as a requirement for first-release readiness, but do not make it a blocker for the initial boot and system update/rollback workflow demo. Validate the application path after that focused demo and before declaring the first release ready.
 - **Alternatives:** Require every Flatpak criterion before the initial system workflow demo; defer some application-installation criteria beyond the first release.
-- **Consequences:** The first demo can focus on boot and system recovery, while release readiness still requires all six application-installation criteria to pass in the target QEMU desktop. Do not describe the broader first release as complete until they pass.
+- **Consequences:** The first demo can focus on boot and system recovery, while release readiness still requires all seven application-installation criteria to pass in the target QEMU desktop. Do not describe the broader first release as complete until they pass.
+- **Amended 2026-11-12 (clerical):** the criterion count, written as six, is now eight. DEC-042 added the default-app uninstall criterion and DEC-050 added the application-source criterion, both after this record was written. The count is bookkeeping; this record's decision is unchanged.
 
 ### DEC-038: Repeatable QEMU baseline profile
 
@@ -392,3 +395,100 @@ See [Open questions](OPEN_QUESTIONS.md) for the remaining decision backlog.
 - **Decision:** Include Brave Browser and ArtCraft in the selected default-app set for the first release. Every default app must be individually uninstallable through a documented graphical path without removing unrelated apps or core system components. Record whether app settings or user data remain after removal. The specific ArtCraft component and the package sources/update mechanisms are not selected by this decision; resolve them before app packaging without changing the accepted default-source and user-control requirements.
 - **Alternatives:** Ship no default third-party applications; make defaults non-removable; select package formats before confirming which apps users want.
 - **Consequences:** The first-release app contract includes these defaults and an explicit uninstall acceptance criterion. Packaging must reconcile Brave's upstream guidance and ArtCraft's multiple products with the accepted Flatpak source policy and the requirement to keep routine app management out of administrator-only package layering. No app is claimed to be implemented or included yet.
+
+### DEC-043: Repository layout for implementation artifacts
+
+- **Status:** Accepted
+- **Date:** 2026-11-12
+- **Context:** DEC-008 requires a versioned Axiom treefile and DEC-031 requires the treefile and repository configuration to be kept in version control, but no location is defined for either. DEC-029 anticipates Axiom-owned Rust components with no home. The repository is documentation-only today, so an implementer beginning Stage 1 would have to invent a layout, and specifications cannot cite stable paths until one exists.
+- **Decision:** Adopt this layout when implementation begins. Directories are created only as the work reaches them; this record reserves the paths so specifications can cite them.
+
+  ```text
+  docs/                 project documentation (existing)
+  docs/validation/      dated validation reports (existing)
+  image/treefile/       Axiom treefile and any included fragments
+  image/lockfiles/      architecture-specific package lockfiles (DEC-031)
+  image/repos/          named Fedora repository definitions (DEC-031)
+  image/blueprints/     Image Builder blueprint(s) for the qcow2 artifact
+  crates/               Axiom-owned Rust components, one directory per crate
+  build/                build and validation entry points
+  build/checks/         repeatable composition and boot checks
+  release/              provenance manifest template and release procedure
+  ```
+
+  Keep composition inputs (`image/`), project-owned code (`crates/`), build orchestration (`build/`), and release process (`release/`) separate, because the accepted decisions already draw boundaries between them: DEC-008 separates package selection from artifact assembly, and DEC-016 separates building from release signing.
+- **Alternatives:** Place the treefile at the repository root and add directories ad hoc; mirror Fedora CoreOS's configuration-repository layout exactly; split composition inputs, Rust components, and release tooling into separate repositories.
+- **Consequences:** Specifications gain citable paths, and moving a path later invalidates those references. `crates/` presumes a single Cargo workspace, which DEC-046 proposes. Separate repositories remain possible later but would complicate the provenance manifest's single source revision field (DEC-026).
+
+### DEC-044: OSTree remote, ref, and version scheme
+
+- **Status:** Accepted
+- **Date:** 2026-11-12
+- **Context:** DEC-014, DEC-015 and DEC-025 require an Axiom OSTree remote whose trust is scoped to an Axiom release key, DEC-008 requires a versioned OSTree commit, and DEC-017 requires a published support end date for each release. None of them names the remote, the ref layout, or the version scheme, so neither the treefile nor the client-side remote configuration can be written, and build evidence has no release identity to record.
+- **Decision:** Use the remote name `axiom` for the production remote, and `axiom-dev` for any development remote; never publish development commits under the `axiom` name (DEC-014). Use the ref scheme `axiom/<fedora-release>/<arch>/<variant>`, for example `axiom/45/x86_64/kinoite`, mirroring Fedora's own ref layout so that a base-release migration is legible as a ref change. Use the release version scheme `<fedora-release>.<serial>`, for example `45.1`, where the serial increments for each published release on that ref, recorded as the OSTree commit version metadata. Identify unpublished prototype builds as `<fedora-release>.0-dev.<short-source-revision>`.
+- **Alternatives:** Date-based versions such as `45.20261112`; semantic versioning independent of the Fedora base; a single ref carrying no release in its path, with the base release tracked only in metadata.
+- **Consequences:** Encoding the Fedora release in the ref makes the DEC-018 end-of-support migration an explicit rebase between named refs rather than a silent change under one ref, and it keeps two base releases publishable at once during a transition. It also means the ref path changes at every Fedora release, so client migration instructions must name the new ref. Changing this scheme after the first publication would require a client trust and ref transition, so it should be settled before any commit is published.
+
+### DEC-045: Build identity in the desktop session
+
+- **Status:** Accepted
+- **Date:** 2026-11-12
+- **Context:** DEC-004 defines first boot as reaching an interactive graphical session "that identifies the Axiom OS build" but leaves the mechanism open. The boot acceptance evidence in `IMAGE_PIPELINE.md` requires a screenshot showing the build identity, so the Stage 1 gate cannot be claimed passed until the mechanism is decided.
+- **Decision:** Set standard `os-release` fields during composition: `NAME="Axiom OS"`, `ID=axiom`, `ID_LIKE=fedora`, `VERSION_ID` set to the DEC-044 release version, `VARIANT` naming the desktop variant, `BUILD_ID` set to the short OSTree commit checksum, plus project `HOME_URL` and `BUG_REPORT_URL`. Require the identity to be legible in the session without opening a terminal, through KDE's System Settings "About this System" page, which reads these fields; that page is the boot-gate screenshot. Add no Axiom-authored splash screen, desktop watermark, or "About Axiom" application in the first milestone.
+- **Alternatives:** A desktop watermark or overlay showing the build; a project-authored "About Axiom" application; identifying the build only from a terminal via `rpm-ostree status`.
+- **Consequences:** This uses the standard mechanism already consumed by KDE, systemd and rpm-ostree, so the gate needs no Axiom-owned code, which suits a milestone whose purpose is validating the pipeline. Setting `ID=axiom` may affect third-party scripts and installers that branch on distribution ID; `ID_LIKE=fedora` is intended to mitigate that and the effect should be noted in the compatibility note (DEC-034). Validation must confirm that Plasma's About page on Fedora 45 displays these fields as expected, and that `BUILD_ID` can be populated from the commit checksum during composition.
+
+### DEC-046: Rust toolchain baseline and component conventions
+
+- **Status:** Accepted
+- **Date:** 2026-11-12
+- **Context:** DEC-029 makes Rust the default for new Axiom-owned system software and requires each component to document its purpose, owner, privilege boundary and maintenance plan, and DEC-010 requires an unprivileged D-Bus client for rollback. No toolchain baseline, dependency policy, or interface convention exists, so components could not be built consistently or reviewed against a shared standard.
+- **Decision:** Keep all Axiom-owned Rust components in a single Cargo workspace under `crates/`, one crate per component. Pin the toolchain with a checked-in `rust-toolchain.toml` naming an exact stable version, preferring the version packaged by the selected Fedora base release so components can be built with the base toolchain; treat that pinned version as the minimum supported version rather than maintaining a separate older floor. Commit `Cargo.lock` for all workspace members. Prefer dependencies already packaged in Fedora; record every new direct dependency and its justification in the component's record. Require a comment stating the upheld invariant at every use of `unsafe`. For D-Bus, call documented system interfaces through a maintained pure-Rust client, defaulting to `zbus` unless a component record justifies otherwise, and never shell out to the `rpm-ostree` command-line tool from a graphical component. Use structured error types at component boundaries, log to the journal, and never log credentials or full user file paths (DEC-023).
+- **Alternatives:** Track the latest stable Rust without a pin; vendor all dependencies into the repository; permit invoking the `rpm-ostree` CLI instead of its D-Bus API; keep crates independent with no workspace.
+- **Consequences:** Pinning to Fedora's packaged toolchain keeps component builds consistent with the base system and avoids introducing a second toolchain into the image pipeline, at the cost of lagging upstream Rust releases and of a toolchain bump at each base-release migration. Preferring Fedora-packaged crates constrains dependency choice and may require justifying a dependency that is not packaged. Calling D-Bus rather than the CLI is what keeps DEC-010's privilege boundary checkable, since the CLI would obscure which authorization path is used.
+
+### DEC-047: Verification strategy and evidence retention
+
+- **Status:** Accepted
+- **Date:** 2026-11-12
+- **Context:** Roadmap Stage 2's exit condition requires "repeatable checks" for core behavior, but nothing defines what a check is, where checks live, or what result counts as evidence. DEC-041 and DEC-026 define build-input evidence only, and DEC-034 requires a compatibility note listing tested virtual hardware and known limitations without saying how that testing is recorded. Without this, "validated" has no agreed meaning and gates cannot be claimed consistently.
+- **Decision:** Define three classes of check, and require every requirement in `REQUIREMENTS.md` to name the class that verifies it.
+  1. **Composition checks** run on the build host against the composed tree or image without booting it: a package is present or absent, a unit is enabled or disabled, a configuration value is set, no unexpected remote is configured. Scriptable and run for every build.
+  2. **Boot checks** run inside the baseline QEMU profile against a booted image: deployment identity, enabled units and listening sockets, configured Flatpak remotes, `os-release` fields.
+  3. **Interaction checks** require a person in the target Plasma session: whether an update explanation is legible, whether an uninstall path works, whether the permission page is reachable. Recorded with a screenshot; not automated for the first release.
+
+  Keep composition and boot checks in `build/checks/` behind a single entry point; these are the repeatable checks Stage 2 requires. File each run as a dated report in `docs/validation/`, attach screenshots for interaction checks, and treat filed reports as immutable. Claim a gate passed only when every requirement in its scope has a recorded check result in a filed report.
+- **Alternatives:** Rely on the written runbook and operator judgment without defined check classes; require full automation including the user interface before Stage 2 can exit; adopt an external continuous-integration service before the local build path is validated.
+- **Consequences:** Most requirements become checkable without a person, while claims about the user interface stay bounded by what was actually observed, which matches the project's evidence rule. Interaction checks remain manual and slow, so full acceptance runs will be infrequent and should be reserved for gates. The check runner is Axiom-owned software and needs a component record under DEC-029 and the conventions in DEC-046.
+
+### DEC-048: Default-application delivery for Brave and ArtCraft
+
+- **Status:** Accepted
+- **Date:** 2026-11-12
+- **Context:** DEC-042 selects Brave Browser and ArtCraft as first-release defaults and requires each to be individually uninstallable through a documented graphical path. Settling the delivery paths required reconciling several accepted decisions:
+  - DEC-031 enables only named Fedora repositories as composition inputs, so neither vendor's own RPM repository can be a build input.
+  - A package composed into the OSTree commit cannot be removed through Discover; removal requires `rpm-ostree override remove`, which DEC-019 keeps outside the supported newcomer workflow. An RPM-delivered default application therefore cannot satisfy DEC-042's graphical-removability requirement.
+  - Brave publishes `com.brave.Browser` on Flathub, but its [Linux guidance](https://brave.com/linux/) states that build is not yet working as well as its native packages and recommends native packages where available.
+  - ArtCraft is **not** published on Flathub. It distributes Flatpaks from its own OCI registry remote at `https://getartcraft.com/artcraft-oci.flatpakrepo`, with the launcher published as `ai.storyteller.artcraft-launcher`, alongside `.deb`, `.rpm`, AppImage and tarball channels. Enabling that remote requires permitting a second default Flatpak source, which DEC-020 prohibited.
+- **Decision:** Deliver Brave as the Flathub Flatpak `com.brave.Browser`, accepting Brave's stated functional caveat and recording it in the compatibility note required by DEC-034. Deliver ArtCraft as the Flatpak launcher `ai.storyteller.artcraft-launcher` from ArtCraft's own OCI remote, enabled as a second default Flatpak source under DEC-050. Use neither vendor's RPM or `.deb` channel, and compose neither application into the OSTree commit, so both remain individually removable through Discover. Seed both at image build time; if Fedora 45 provides no offline seeding mechanism, treat them as first-run installations and state the network requirement explicitly rather than implying offline capability.
+- **Alternatives:** Ship Brave as a layered RPM from Brave's own repository, which would require superseding DEC-031 and relaxing DEC-042's removability requirement; ship no default third-party applications at all, superseding DEC-042; deliver ArtCraft from its `.rpm` channel, which DEC-031 forbids and which would not be graphically removable.
+- **Consequences:** Both defaults are Flatpaks, so both are sandboxed, carry declared permissions, and can be removed through Discover without touching the base system. This satisfies DEC-042 without superseding DEC-031 or DEC-042; the cost is a second default application source (DEC-050) and Brave's reduced Flatpak functionality. Validation must establish three things before release: whether ArtCraft's OCI remote can be enabled at system scope rather than the `--user` scope its own instructions show; what integrity verification that remote provides, since its documentation describes only SHA-256 checksums over files streamed from GitHub Releases and names no signing key, which DEC-012 makes a security-relevant gap for a default-enabled remote; and whether the launcher's in-app installation of further Craft apps presents source and permission information consistently with DEC-021. Upstream describes most Craft applications as in development or early alpha, which is a product risk for the newcomer audience in DEC-001 and belongs in the compatibility note.
+
+### DEC-049: Treefile derivation from Fedora's configuration
+
+- **Status:** Accepted
+- **Date:** 2026-11-12
+- **Context:** DEC-008 requires a versioned Axiom treefile "based on Fedora's Atomic Desktop configuration" without saying how it derives from it. rpm-ostree treefiles support an `include` directive, and Fedora maintains its Atomic Desktop manifests in a configuration repository. The derivation mechanism sets the maintenance cost of every future base-release migration and determines whether Axiom's own changes stay reviewable, so it must be settled before the treefile can be specified.
+- **Decision:** Vendor Fedora's Atomic Desktop configuration at a pinned revision, and have the Axiom treefile `include` Fedora's Kinoite manifest while overriding only what Axiom changes. Keep Axiom-owned additions, exclusions and configuration in the Axiom treefile, so that one file is the complete record of how Axiom differs from Fedora Kinoite. Record the pinned Fedora configuration revision in build evidence (DEC-041) and in the provenance manifest (DEC-026). Treat a base-release migration as a revision bump followed by review of the resulting differences.
+- **Alternatives:** Copy Fedora's treefile wholesale and maintain it as Axiom's own; reference Fedora's configuration repository at a moving branch rather than a pinned revision; specify required contents only and defer derivation until after the Fedora 45 probes.
+- **Consequences:** The Axiom diff stays small and auditable, which is what makes DEC-028's commitment to inherit base components checkable: everything Axiom changes is visible in one file. Upstream changes then arrive deliberately at a revision bump rather than silently. The cost is a dependency on the `include` mechanism and on Fedora's manifest structure, both of which must be confirmed for Fedora 45 during Stage 1, since `IMAGE_PIPELINE.md` forbids inferring Fedora 45 behavior from earlier releases. If the include path proves unusable on Fedora 45, record the evidence and return with a scoped alternative rather than silently vendoring a fork.
+
+### DEC-050: Permit the ArtCraft OCI remote as a second default application source
+
+- **Status:** Accepted
+- **Date:** 2026-11-12
+- **Supersedes:** [DEC-020](#dec-020-default-flatpak-application-source) in part — only its clause prohibiting additional default Flatpak remotes. The rest of DEC-020 continues to apply.
+- **Context:** DEC-020 enabled the full Flathub remote by default and prohibited enabling any additional Flatpak remote in the first release. DEC-042 then selected ArtCraft as a default application, and ArtCraft is not published on Flathub; it distributes Flatpaks only from its own OCI registry remote. Including ArtCraft as a default therefore requires either a second default remote or a different delivery path, and every other path conflicts with DEC-031 or with DEC-042's graphical-removability requirement (DEC-048).
+- **Decision:** Permit exactly one additional default Flatpak remote — ArtCraft's OCI remote at `https://getartcraft.com/artcraft-oci.flatpakrepo` — for the purpose of delivering the selected ArtCraft component. Enable no other additional remote by default. The rest of DEC-020 applies to both remotes: show the application's source before installation, explain declared permissions in plain language, and never present publisher verification as a safety certification. Because this remote is vendor-operated rather than a broad catalog, the interface must make clear which remote supplies an application.
+- **Alternatives:** Keep DEC-020 unchanged and drop ArtCraft from the defaults; keep DEC-020 unchanged and deliver ArtCraft from its RPM channel, which DEC-031 forbids; permit additional remotes in general rather than naming this one.
+- **Consequences:** Axiom carries two default application sources, so the application contract must state which remote supplies each default, and users need an accessible way to tell them apart. The ArtCraft remote's verification properties are not established — its documentation describes SHA-256 checksums over files streamed from GitHub Releases and names no signing key — so DEC-012's treatment of third-party applications as untrusted applies with particular force here, and the remote's integrity behavior must be validated before release. Permitting one named remote rather than remotes in general keeps the boundary reviewable: adding a third source requires another decision.
